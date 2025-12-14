@@ -1,84 +1,89 @@
 <!DOCTYPE html>
 <html lang="sv">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MittPsyke – Ditt stöd, på dina villkor</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <title>MittPsyke – kommer snart</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="description" content="MittPsyke är under uppbyggnad. Vi kommer tillbaka i lugn takt." />
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at top, #1e293b, #0f172a);
+      color: #e5e7eb;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        Roboto, Helvetica, Arial, sans-serif;
+      text-align: center;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 520px;
+      padding: 2.5rem 2rem;
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      margin-bottom: 0.5rem;
+      letter-spacing: 0.5px;
+    }
+
+    .subtitle {
+      font-size: 1.1rem;
+      opacity: 0.85;
+      margin-bottom: 2rem;
+    }
+
+    .divider {
+      width: 60px;
+      height: 3px;
+      margin: 0 auto 2rem;
+      background: #60a5fa;
+      border-radius: 2px;
+    }
+
+    p {
+      font-size: 1rem;
+      opacity: 0.9;
+      margin-bottom: 1.2rem;
+    }
+
+    .note {
+      font-size: 0.9rem;
+      opacity: 0.7;
+      margin-top: 2rem;
+    }
+  </style>
 </head>
 
 <body>
-  <body class="dark-mode">
+  <main class="container">
+    <h1>MittPsyke</h1>
+    <div class="subtitle">En plats för stöd, i din takt</div>
 
+    <div class="divider"></div>
 
-  <!-- NAVBAR -->
-  <nav class="navbar">
-    <a href="index.html">Hem</a>
-    <a href="login.html">Logga in</a>
-    <a href="register.html">Skapa konto</a>
-  </nav>
+    <p>
+      Vi bygger vidare i lugn takt.<br />
+      Sidan är tillfälligt pausad och kommer tillbaka när den är redo.
+    </p>
 
-  <!-- HERO SEKTION -->
-  <header class="hero">
-    <h1>En trygg plats där du får stöd – på dina villkor.</h1>
-    <p>Välj det som stämmer in på dig och börja din personliga resa med en AI som följer dig över tid.</p>
-    <a href="ai.html" class="hero-btn">💬 Starta AI-stödet</a>
-  </header>
+    <p>
+      Ta hand om dig under tiden 💛
+    </p>
 
-  <!-- NY PORTAL-SEKTION (DEN FINA VERSIONEN) -->
-  <section class="portal-section">
-
-    <h2 class="portal-title">Välj ditt område</h2>
-
-    <!-- ÅNGEST -->
-    <div class="portal-box">
-      <h3><span class="icon">💙</span> Ångest</h3>
-      <p>När oron tar över, tankarna rusar eller kroppen går upp i varv.</p>
-      <a href="portal-a.html" class="portal-link">Öppna portalen →</a>
+    <div class="note">
+      © MittPsyke
     </div>
-
-    <!-- DEPRESSION -->
-    <div class="portal-box">
-      <h3><span class="icon">🤍</span> Depression</h3>
-      <p>När allt känns tungt, tomt eller energilöst och du behöver mild vägledning.</p>
-      <a href="portal-b.html" class="portal-link">Öppna portalen →</a>
-    </div>
-
-    <!-- TRAUMA & VÅLD -->
-    <div class="portal-box">
-      <h3><span class="icon">🕊️</span> Trauma & Våld</h3>
-      <p>När kroppen, tryggheten eller minnena gör att du inte känner dig som dig själv.</p>
-      <a href="portal-e.html" class="portal-link">Öppna portalen →</a>
-    </div>
-
-  </section>
-
-  <!-- SÅ FUNGERAR MITTPSYKE -->
-  <section class="portal-section">
-    <h2 class="portal-title">Så fungerar MittPsyke</h2>
-
-    <div class="portal-box">
-      <h3>1. Välj ett område</h3>
-      <p>Du börjar med att välja det som stämmer bäst in på hur du mår just nu.</p>
-    </div>
-
-    <div class="portal-box">
-      <h3>2. Få personligt stöd</h3>
-      <p>AI:n guidar dig varsamt, i din takt. Du kan skriva av dig eller få hjälp att sortera tankar.</p>
-    </div>
-
-    <div class="portal-box">
-      <h3>3. Verktyg & resurser</h3>
-      <p>Du får verktyg, övningar och länkar till stödlinjer som matchar just det du behöver.</p>
-    </div>
-
-  </section>
-  
-<button class="theme-toggle" onclick="toggleTheme()">🌙</button>
-<script src="theme.js"></script>
-<button class="theme-toggle" onclick="toggleTheme()">🌙</button>
-<script src="theme.js"></script>
-
+  </main>
 </body>
 </html>
-
