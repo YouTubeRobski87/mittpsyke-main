@@ -1,5 +1,4 @@
-const API_URL = "https://nhdkblsnkvmsssybjhbd.supabase.co/functions/v1/ai-chat";
-const ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5oZGtibHNua3Ztc3NzeWJqaGJkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjU1Nzc2NjIsImV4cCI6MjA4MTE1MzY2Mn0.PENh2IvC4zyVO0oNkYSc6hMHRIGYN0RiV8TRWGwA3fM";
+const API_URL = "/.netlify/functions/ai";
 
 async function sendMessage() {
   const input = document.getElementById("user-input");
@@ -27,31 +26,18 @@ async function sendMessage() {
 
   try {
     const response = await fetch(API_URL, {
-      const response = await fetch(API_URL, {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json",
-    "Authorization": `Bearer ${ANON_KEY}`,
-    "apikey": ANON_KEY
-  },
-  body: JSON.stringify({ message: text })
-});
-
-console.log("STATUS:", response.status);
-console.log("OK:", response.ok);
-
-
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${ANON_KEY}`,
-        "apikey": ANON_KEY
+        "Content-Type": "application/json"
       },
       body: JSON.stringify({ message: text })
     });
 
-    const textResponse = await response.text();
-    pTag.textContent = textResponse;
+    console.log("STATUS:", response.status);
+    console.log("OK:", response.ok);
+
+    const reply = await response.text();
+    pTag.textContent = reply;
     chat.scrollTop = chat.scrollHeight;
 
   } catch (err) {
