@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="sv">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI-stöd | MittPsyke</title>
+
+  <link rel="stylesheet" href="style.css">
+  <script src="theme.js" defer></script>
+  <script src="ai.js" defer></script>
+</head>
+
+<body class="dark-mode">
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <a href="index.html">Hem</a>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero">
+    <h1>💬 AI-stöd</h1>
+    <p>Skriv av dig i lugn och ro. AI:n svarar mjukt och empatiskt – i din takt.</p>
+  </header>
+
+  <!-- MAIN -->
+  <main>
+
+    <div class="chat-wrapper">
+
+      <!-- CHAT FÖNSTER -->
+      <div id="chat-box" class="chat-box">
+
+        <div class="msg ai-msg">
+          <div class="msg-label">Stöd-AI</div>
+          <p>Hej! Jag är här med dig. Vad vill du prata om idag? 💛</p>
+        </div>
+
+      </div>
+
+      <!-- SKRIVFÄLT -->
+      <div class="chat-input-area">
+        <input 
+          id="user-input" 
+          type="text" 
+          placeholder="Skriv ett meddelande..."
+          onkeydown="if(event.key === 'Enter') sendMessage()"
+        />
+        <button onclick="sendMessage()">➤</button>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- TEMA-KNAPP -->
+  <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+
+</body>
+</html>

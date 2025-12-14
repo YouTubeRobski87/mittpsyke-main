@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Logga in | MittPsyke</title>
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Supabase SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <!-- Login-script -->
+  <script src="auth-login.js"></script>
+</head>
+
+<body>
+
+  <nav class="navbar">
+    <a href="index.html">Hem</a>
+  </nav>
+
+  <header class="hero">
+    <h1>Logga in</h1>
+    <p>Välkommen tillbaka 💛</p>
+  </header>
+
+  <section class="portal-section" style="max-width: 450px; margin: 0 auto;">
+
+    <div class="input-field">
+      <label>E-postadress</label>
+      <input type="email" id="login-email" placeholder="din@epost.se" required>
+    </div>
+
+    <div class="input-field">
+      <label>Lösenord</label>
+      <input type="password" id="login-password" placeholder="•••••••" required>
+    </div>
+
+    <button class="hero-btn" onclick="loginUser(
+      document.getElementById('login-email').value,
+      document.getElementById('login-password').value
+    )">Logga in</button>
+
+    <p style="margin-top: 20px; text-align: center;">
+      Har du inget konto?  
+      <a href="register.html" style="color: #6a5acd;">Skapa konto här</a>
+    </p>
+
+  </section>
+<button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+<script src="theme.js"></script>
+
+</body>
+</html>

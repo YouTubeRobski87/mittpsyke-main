@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Skapa konto | MittPsyke</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="auth.js"></script>
+
+</head>
+
+<body>
+
+  <nav class="navbar">
+    <a href="index.html">Hem</a>
+  </nav>
+
+  <header class="hero">
+    <h1>Skapa konto</h1>
+    <p>Det tar bara några sekunder 💛</p>
+  </header>
+
+  <section class="portal-section" style="max-width: 450px; margin: 0 auto;">
+
+    <div class="input-field">
+      <label>E-postadress</label>
+      <input type="email" id="reg-email" placeholder="din@epost.se" required>
+    </div>
+
+    <div class="input-field">
+      <label>Lösenord</label>
+      <input type="password" id="reg-password" placeholder="Minst 6 tecken" required>
+    </div>
+
+    <button class="hero-btn" onclick="registerUser(
+      document.getElementById('reg-email').value,
+      document.getElementById('reg-password').value
+    )">Skapa konto</button>
+<button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+<script src="theme.js"></script>
+
+  </section>
+
+</body>
+</html>

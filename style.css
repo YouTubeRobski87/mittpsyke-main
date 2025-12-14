@@ -1,0 +1,1163 @@
+/* =========================
+   Bas & Tema
+========================= */
+
+:root {
+  --bg-color: #0f1724;
+  --bg-elevated: #111827;
+  --bg-soft: #020617;
+  --text-color: #e5e7eb;
+  --muted-text: #9ca3af;
+  --accent: #38bdf8;
+  --accent-soft: rgba(56, 189, 248, 0.12);
+  --accent-strong: #0ea5e9;
+  --danger: #f97373;
+  --border-subtle: rgba(148, 163, 184, 0.35);
+  --shadow-soft: 0 18px 45px rgba(0, 0, 0, 0.45);
+  --radius-xl: 18px;
+  --radius-full: 999px;
+  --transition-fast: 0.18s ease-out;
+  --transition-med: 0.25s ease;
+  --font-main: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+    "Segoe UI", sans-serif;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-main);
+  background: radial-gradient(circle at top, #020617 0, #020617 35%, #020617 100%);
+  color: var(--text-color);
+  min-height: 100vh;
+}
+
+/* Ljust läge */
+body:not(.dark-mode) {
+  --bg-color: #f3f4f6;
+  --bg-elevated: #ffffff;
+  --bg-soft: #e5e7eb;
+  --text-color: #111827;
+  --muted-text: #6b7280;
+  --accent: #0ea5e9;
+  --accent-soft: rgba(14, 165, 233, 0.12);
+  --accent-strong: #0284c7;
+  --border-subtle: rgba(148, 163, 184, 0.5);
+  --shadow-soft: 0 18px 40px rgba(15, 23, 42, 0.15);
+}
+
+/* =========================
+   Layout
+========================= */
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto 2rem auto;
+  padding: 1.5rem;
+  box-sizing: border-box;
+}
+
+/* =========================
+   Navbar
+========================= */
+
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1rem;
+  background: linear-gradient(
+    to bottom,
+    rgba(15, 23, 42, 0.95),
+    rgba(15, 23, 42, 0.88)
+  );
+  backdrop-filter: blur(18px);
+  border-bottom: 1px solid rgba(148, 163, 184, 0.3);
+}
+
+.navbar a {
+  color: var(--muted-text);
+  text-decoration: none;
+  font-size: 0.95rem;
+  padding: 0.45rem 0.9rem;
+  border-radius: var(--radius-full);
+  border: 1px solid transparent;
+  transition: background var(--transition-fast), color var(--transition-fast),
+    border-color var(--transition-fast), transform var(--transition-fast);
+}
+
+.navbar a:hover {
+  background: rgba(15, 118, 188, 0.16);
+  color: var(--accent-strong);
+  border-color: rgba(56, 189, 248, 0.55);
+  transform: translateY(-1px);
+}
+
+.navbar a[href*="portal-"] {
+  border-color: rgba(148, 163, 184, 0.4);
+}
+
+.navbar a[href*="index"] {
+  font-weight: 600;
+}
+
+/* =========================
+   Hero
+========================= */
+
+.hero {
+  max-width: 900px;
+  margin: 1.8rem auto 1.5rem auto;
+  padding: 1.8rem 1.6rem;
+  background: radial-gradient(circle at top left, rgba(56, 189, 248, 0.23), transparent 55%),
+    radial-gradient(circle at bottom right, rgba(129, 140, 248, 0.24), transparent 55%),
+    var(--bg-elevated);
+  border-radius: 1.7rem;
+  box-shadow: var(--shadow-soft);
+  border: 1px solid rgba(148, 163, 184, 0.55);
+  text-align: left;
+}
+
+.hero h1 {
+  font-size: clamp(1.7rem, 4vw, 2.3rem);
+  margin-bottom: 0.65rem;
+  letter-spacing: 0.01em;
+}
+
+.hero p {
+  margin: 0;
+  color: var(--muted-text);
+  line-height: 1.5;
+  font-size: 0.98rem;
+}
+
+/* =========================
+   Theme Toggle
+========================= */
+
+.theme-toggle {
+  position: fixed;
+  right: 1.1rem;
+  bottom: 1.1rem;
+  z-index: 60;
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(148, 163, 184, 0.55);
+  background: radial-gradient(circle at top, rgba(56, 189, 248, 0.22), transparent 55%),
+    var(--bg-elevated);
+  color: var(--text-color);
+  padding: 0.55rem 0.8rem;
+  cursor: pointer;
+  font-size: 1.1rem;
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.75);
+  transition: background var(--transition-med), transform var(--transition-fast),
+    box-shadow var(--transition-fast), border-color var(--transition-fast);
+}
+
+.theme-toggle:hover {
+  transform: translateY(-1px) scale(1.02);
+  box-shadow: 0 22px 50px rgba(15, 23, 42, 0.85);
+  border-color: rgba(56, 189, 248, 0.9);
+}
+
+/* =========================
+   Sektioner (portaler)
+========================= */
+
+.portal-section {
+  max-width: 900px;
+  margin: 1.3rem auto;
+  padding: 1.3rem 1.4rem 1.4rem 1.4rem;
+  background: linear-gradient(
+    to bottom right,
+    rgba(15, 23, 42, 0.96),
+    rgba(15, 23, 42, 0.92)
+  );
+  border-radius: 1.4rem;
+  border: 1px solid rgba(148, 163, 184, 0.45);
+  box-shadow: 0 16px 34px rgba(15, 23, 42, 0.7);
+}
+
+body:not(.dark-mode) .portal-section {
+  background: #ffffff;
+  box-shadow: 0 16px 32px rgba(15, 23, 42, 0.1);
+}
+
+.portal-section h2 {
+  font-size: 1.25rem;
+  margin-top: 0;
+  margin-bottom: 0.9rem;
+}
+
+.support-text {
+  color: var(--muted-text);
+  margin-bottom: 0.9rem;
+  white-space: pre-line;
+}
+
+/* =========================
+   Knapp-stilar
+========================= */
+
+.hero-btn,
+.checkin-btn,
+.tool-btn,
+.chat-send-btn,
+.chat-quick-reply {
+  border-radius: var(--radius-full);
+  border: 1px solid transparent;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.95rem;
+  padding: 0.6rem 1.15rem;
+  transition: background var(--transition-fast), color var(--transition-fast),
+    box-shadow var(--transition-fast), transform var(--transition-fast),
+    border-color var(--transition-fast);
+}
+
+/* Stor primär knapp (t.ex. "Starta AI-stödet") */
+.hero-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+  color: #0b1220;
+  font-weight: 600;
+  box-shadow: 0 16px 38px rgba(56, 189, 248, 0.55);
+  text-decoration: none;
+  margin-top: 0.4rem;
+}
+
+.hero-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 20px 46px rgba(56, 189, 248, 0.7);
+}
+
+/* Check-in knappar */
+.checkin-grid,
+.tool-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 0.6rem;
+  margin-top: 0.4rem;
+}
+
+.checkin-btn,
+.tool-btn {
+  background: rgba(15, 23, 42, 0.85);
+  color: var(--text-color);
+  border-color: rgba(148, 163, 184, 0.55);
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.55rem 0.8rem;
+  text-align: center;
+}
+
+body:not(.dark-mode) .checkin-btn,
+body:not(.dark-mode) .tool-btn {
+  background: #f9fafb;
+}
+
+.checkin-btn:hover,
+.tool-btn:hover {
+  background: var(--accent-soft);
+  border-color: rgba(56, 189, 248, 0.75);
+  transform: translateY(-1px);
+}
+
+/* =========================
+   AI-bubblor (portaler)
+========================= */
+
+.ai-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.ai-bubble {
+  position: relative;
+  padding: 0.9rem 1rem;
+  border-radius: 1.1rem;
+  background: radial-gradient(circle at top left, rgba(56, 189, 248, 0.16), transparent 55%),
+    rgba(15, 23, 42, 0.96);
+  border: 1px solid rgba(148, 163, 184, 0.55);
+  box-shadow: 0 14px 30px rgba(15, 23, 42, 0.85);
+  animation: fadeInUp 0.35s ease-out;
+}
+
+body:not(.dark-mode) .ai-bubble {
+  background: linear-gradient(to bottom right, #f9fafb, #ffffff);
+  box-shadow: 0 12px 24px rgba(15, 23, 42, 0.08);
+}
+
+.ai-bubble h3 {
+  margin: 0 0 0.4rem 0;
+  font-size: 1.02rem;
+}
+
+.ai-bubble p {
+  margin: 0.18rem 0;
+  color: var(--muted-text);
+  font-size: 0.94rem;
+}
+
+.ai-bubble ul,
+.ai-bubble ol {
+  margin: 0.3rem 0 0.1rem 1.1rem;
+  padding: 0;
+  color: var(--muted-text);
+  font-size: 0.92rem;
+}
+
+/* =========================
+   Footer
+========================= */
+
+.footer {
+  max-width: 900px;
+  margin: 1.6rem auto 2.2rem auto;
+  text-align: center;
+  color: var(--muted-text);
+  font-size: 0.9rem;
+}
+
+/* =========================
+   AI Chat – ai.html
+========================= */
+
+.chat-page {
+  max-width: 960px;
+  margin: 1.3rem auto 2rem auto;
+  padding: 1.2rem 1.1rem;
+  background: radial-gradient(circle at top, rgba(56, 189, 248, 0.18), transparent 60%),
+    var(--bg-elevated);
+  border-radius: 1.6rem;
+  box-shadow: var(--shadow-soft);
+  border: 1px solid rgba(148, 163, 184, 0.6);
+}
+
+.chat-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-bottom: 0.8rem;
+}
+
+.chat-header h2 {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.chat-header p {
+  margin: 0;
+  color: var(--muted-text);
+  font-size: 0.93rem;
+}
+
+.chat-portal-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.2rem 0.7rem;
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(56, 189, 248, 0.7);
+  background: rgba(15, 23, 42, 0.95);
+  font-size: 0.78rem;
+  color: var(--accent);
+  margin-top: 0.2rem;
+}
+
+/* Själva chat-fönstret */
+.chat-window {
+  margin-top: 0.8rem;
+  background: rgba(15, 23, 42, 0.95);
+  border-radius: 1.1rem;
+  border: 1px solid rgba(148, 163, 184, 0.6);
+  max-height: 480px;
+  min-height: 260px;
+  overflow-y: auto;
+  padding: 0.85rem 0.9rem 0.9rem 0.9rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+body:not(.dark-mode) .chat-window {
+  background: #f9fafb;
+}
+
+/* Meddelanden */
+/* Meddelanden + avatarer */
+.message-row {
+  display: flex;
+  gap: 0.45rem;
+  margin-bottom: 0.15rem;
+  align-items: flex-end;
+}
+
+.message-row.user {
+  justify-content: flex-end;
+  flex-direction: row-reverse;
+}
+
+.message-row.ai {
+  justify-content: flex-start;
+}
+
+.avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  background: var(--bg-soft);
+  border: 1px solid rgba(148, 163, 184, 0.7);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  color: var(--muted-text);
+  box-shadow: 0 8px 18px rgba(15, 23, 42, 0.8);
+  flex-shrink: 0;
+}
+
+body:not(.dark-mode) .avatar {
+  background: #f3f4f6;
+  box-shadow: 0 8px 14px rgba(15, 23, 42, 0.15);
+}
+
+.avatar-ai {
+  background: radial-gradient(circle at top, rgba(56, 189, 248, 0.4), rgba(15, 23, 42, 0.98));
+  color: #e0f2fe;
+  border-color: rgba(56, 189, 248, 0.8);
+}
+
+.avatar-user {
+  background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+  color: #020617;
+  border-color: transparent;
+}
+
+/* Själva bubblorna */
+.message-bubble {
+  max-width: 75%;
+  padding: 0.6rem 0.75rem;
+  border-radius: 1rem;
+  font-size: 0.93rem;
+  line-height: 1.4;
+  box-shadow: 0 10px 26px rgba(15, 23, 42, 0.7);
+  animation: fadeInUp 0.28s ease-out;
+}
+
+.message-row.ai .message-bubble {
+  border-radius: 1.05rem 1.05rem 1.05rem 0.35rem;
+  background: radial-gradient(circle at top left, rgba(56, 189, 248, 0.18), transparent 52%),
+    rgba(15, 23, 42, 0.98);
+  border: 1px solid rgba(148, 163, 184, 0.7);
+  color: var(--text-color);
+}
+
+.message-row.user .message-bubble {
+  border-radius: 1.05rem 1.05rem 0.35rem 1.05rem;
+  background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+  color: #020617;
+  font-weight: 500;
+}
+
+.message-row.user {
+  justify-content: flex-end;
+}
+
+.message-row.ai {
+  justify-content: flex-start;
+}
+
+.message-bubble {
+  max-width: 75%;
+  padding: 0.6rem 0.75rem;
+  border-radius: 1rem;
+  font-size: 0.93rem;
+  line-height: 1.4;
+  box-shadow: 0 10px 26px rgba(15, 23, 42, 0.7);
+  animation: fadeInUp 0.28s ease-out;
+}
+
+/* AI-bubbla */
+.message-row.ai .message-bubble {
+  border-radius: 1.05rem 1.05rem 1.05rem 0.35rem;
+  background: radial-gradient(circle at top left, rgba(56, 189, 248, 0.18), transparent 52%),
+    rgba(15, 23, 42, 0.98);
+  border: 1px solid rgba(148, 163, 184, 0.7);
+  color: var(--text-color);
+}
+
+/* Användar-bubbla */
+.message-row.user .message-bubble {
+  border-radius: 1.05rem 1.05rem 0.35rem 1.05rem;
+  background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+  color: #020617;
+  font-weight: 500;
+}
+
+/* Quick-reply knappar under chatten */
+.chat-quick-replies {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin: 0.65rem 0 0 0;
+}
+
+.chat-quick-reply {
+  background: rgba(15, 23, 42, 0.96);
+  color: var(--muted-text);
+  font-size: 0.8rem;
+  padding: 0.45rem 0.8rem;
+  border-color: rgba(148, 163, 184, 0.65);
+}
+
+.chat-quick-reply:hover {
+  background: var(--accent-soft);
+  color: var(--accent);
+  border-color: rgba(56, 189, 248, 0.85);
+}
+
+/* Input-rad */
+.chat-input-row {
+  display: flex;
+  gap: 0.55rem;
+  margin-top: 0.8rem;
+}
+
+.chat-input {
+  flex: 1;
+  border-radius: 0.9rem;
+  border: 1px solid rgba(148, 163, 184, 0.7);
+  padding: 0.55rem 0.75rem;
+  font-family: inherit;
+  font-size: 0.95rem;
+  resize: none;
+  min-height: 44px;
+  max-height: 96px;
+  background: rgba(15, 23, 42, 0.98);
+  color: var(--text-color);
+}
+
+body:not(.dark-mode) .chat-input {
+  background: #ffffff;
+  color: #111827;
+}
+
+.chat-input:focus {
+  outline: none;
+  border-color: var(--accent-strong);
+  box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.55);
+}
+
+/* Skicka-knapp */
+.chat-send-btn {
+  background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+  color: #020617;
+  font-weight: 600;
+  padding-inline: 0.9rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  box-shadow: 0 12px 26px rgba(56, 189, 248, 0.55);
+}
+
+.chat-send-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 16px 34px rgba(56, 189, 248, 0.7);
+}
+
+/* =========================
+   Animationer
+========================= */
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* =========================
+   Responsivitet
+========================= */
+/* Rensa-konversation knapp */
+
+.chat-clear-row {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 0.45rem;
+}
+
+.chat-clear-btn {
+  border-radius: 999px;
+  border: 1px dashed rgba(148, 163, 184, 0.8);
+  background: transparent;
+  color: var(--muted-text);
+  font-size: 0.8rem;
+  padding: 0.3rem 0.8rem;
+  cursor: pointer;
+  transition: background 0.18s ease-out, border-color 0.18s ease-out,
+    color 0.18s ease-out, transform 0.18s ease-out;
+}
+
+.chat-clear-btn:hover {
+  background: rgba(15, 23, 42, 0.88);
+  border-style: solid;
+  border-color: rgba(248, 250, 252, 0.7);
+  color: var(--text-color);
+  transform: translateY(-1px);
+}
+
+body:not(.dark-mode) .chat-clear-btn:hover {
+  background: #e5e7eb;
+}
+
+/* Portal-färg på chat-rutan */
+
+body.portal-A .chat-page {
+  border-color: rgba(56, 189, 248, 0.9);
+  box-shadow: 0 18px 46px rgba(56, 189, 248, 0.45);
+}
+
+body.portal-B .chat-page {
+  border-color: rgba(244, 114, 182, 0.85);
+  box-shadow: 0 18px 46px rgba(244, 114, 182, 0.4);
+}
+
+body.portal-E .chat-page {
+  border-color: rgba(96, 165, 250, 0.9);
+  box-shadow: 0 18px 46px rgba(59, 130, 246, 0.4);
+}
+
+body.portal-A .chat-portal-tag {
+  border-color: rgba(56, 189, 248, 0.9);
+  color: #7dd3fc;
+}
+
+body.portal-B .chat-portal-tag {
+  border-color: rgba(244, 114, 182, 0.9);
+  color: #f9a8d4;
+}
+
+body.portal-E .chat-portal-tag {
+  border-color: rgba(96, 165, 250, 0.9);
+  color: #bfdbfe;
+}
+
+@media (max-width: 768px) {
+  main {
+    padding: 1rem;
+  }
+
+  .hero {
+    padding: 1.3rem 1.2rem;
+    margin: 1.2rem 0.8rem;
+  }
+
+  .portal-section {
+    margin: 0.9rem 0.6rem;
+    padding: 1.05rem 1rem;
+  }
+
+  .chat-page {
+    margin: 1rem 0.6rem 2rem 0.6rem;
+    padding: 1.05rem 1rem 1.2rem 1rem;
+  }
+
+  .chat-window {
+    max-height: 380px;
+  }
+
+  .navbar {
+    flex-wrap: wrap;
+  }
+
+  .navbar a {
+    font-size: 0.86rem;
+    padding-inline: 0.7rem;
+  }
+   /* =========================
+   Typing-indikator
+========================= */
+
+.typing-row {
+  justify-content: flex-start;
+}
+
+.typing-bubble {
+  max-width: 40%;
+  padding: 0.35rem 0.6rem;
+  border-radius: 1rem;
+  background: rgba(15, 23, 42, 0.98);
+  border: 1px solid rgba(148, 163, 184, 0.7);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.8rem;
+  color: var(--muted-text);
+}
+
+body:not(.dark-mode) .typing-bubble {
+  background: #f3f4f6;
+}
+
+.typing-label {
+  font-size: 0.78rem;
+  opacity: 0.8;
+}
+
+.typing-dots {
+  display: inline-flex;
+  gap: 0.15rem;
+}
+
+.typing-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 999px;
+  background: rgba(148, 163, 184, 0.95);
+  animation: typingBounce 1s infinite;
+}
+
+.typing-dot:nth-child(2) {
+  animation-delay: 0.15s;
+}
+.typing-dot:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+@keyframes typingBounce {
+  0%,
+  60%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.5;
+  }
+  30% {
+    transform: translateY(-3px);
+    opacity: 1;
+  }
+}
+
+   /* =========================
+   STARTSIDANS PORTAL-KORT
+========================= */
+
+.portal-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.3rem;
+  margin-top: 1.1rem;
+}
+
+.portal-card {
+  display: flex;
+  flex-direction: column;
+  padding: 1.4rem 1.2rem;
+  border-radius: 1.3rem;
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(148, 163, 184, 0.45);
+  box-shadow: 0 18px 36px rgba(15, 23, 42, 0.65);
+  text-decoration: none;
+  color: var(--text-color);
+  transition: transform 0.25s ease, box-shadow 0.25s ease,
+    border-color 0.25s ease, background 0.25s ease;
+  position: relative;
+}
+
+body:not(.dark-mode) .portal-card {
+  background: #ffffff;
+  border-color: rgba(148, 163, 184, 0.4);
+  box-shadow: 0 12px 24px rgba(15, 23, 42, 0.08);
+}
+
+.portal-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 22px 48px rgba(56, 189, 248, 0.25);
+  border-color: rgba(56, 189, 248, 0.75);
+}
+
+.portal-card h3 {
+  margin: 0.3rem 0 0.4rem 0;
+  font-size: 1.25rem;
+}
+
+.portal-card p {
+  margin: 0 0 0.8rem 0;
+  color: var(--muted-text);
+  font-size: 0.95rem;
+  line-height: 1.45;
+}
+
+.portal-btn {
+  margin-top: auto;
+  display: inline-block;
+  padding: 0.45rem 0.9rem;
+  background: rgba(56, 189, 248, 0.15);
+  border-radius: var(--radius-full);
+  font-size: 0.9rem;
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  color: var(--accent);
+}
+
+.portal-card:hover .portal-btn {
+  background: rgba(56, 189, 248, 0.25);
+  border-color: rgba(56, 189, 248, 0.65);
+}
+
+/* Ikoner */
+.portal-icon {
+  font-size: 2rem;
+  margin-bottom: 0.4rem;
+}
+
+/* Portal-färgdetaljer */
+.portal-A {
+  border-color: rgba(56, 189, 248, 0.4);
+}
+.portal-A:hover {
+  box-shadow: 0 22px 48px rgba(56, 189, 248, 0.42);
+}
+
+.portal-B {
+  border-color: rgba(244, 114, 182, 0.45);
+}
+.portal-B:hover {
+  box-shadow: 0 22px 48px rgba(244, 114, 182, 0.4);
+}
+
+.portal-E {
+  border-color: rgba(96, 165, 250, 0.45);
+}
+.portal-E:hover {
+  box-shadow: 0 22px 48px rgba(96, 165, 250, 0.4);
+}
+
+
+
+/* =========================
+   HOW MITTPSYKE WORKS – STEG
+========================= */
+
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.3rem;
+  margin-top: 1.2rem;
+}
+
+.step-card {
+  background: rgba(15, 23, 42, 0.9);
+  border-radius: 1.3rem;
+  padding: 1.4rem 1.2rem;
+  border: 1px solid rgba(148, 163, 184, 0.45);
+  text-align: center;
+  box-shadow: 0 18px 36px rgba(15, 23, 42, 0.65);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+body:not(.dark-mode) .step-card {
+  background: #ffffff;
+  box-shadow: 0 12px 24px rgba(15, 23, 42, 0.08);
+}
+
+.step-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 22px 48px rgba(56, 189, 248, 0.25);
+}
+
+.step-number {
+  width: 42px;
+  height: 42px;
+  margin: 0 auto 0.6rem auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+  color: #020617;
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.step-card h3 {
+  margin: 0 0 0.4rem 0;
+  font-size: 1.15rem;
+}
+
+.step-card p {
+  margin: 0;
+  color: var(--muted-text);
+  line-height: 1.4;
+  font-size: 0.95rem;
+}
+
+
+
+/* =========================
+   JUSTERA SEKTIONSRUBRIKER PÅ STARTSIDAN
+========================= */
+
+.portal-section h2 {
+  font-size: 1.45rem;
+  margin-top: 0;
+  margin-bottom: 1rem;
+  letter-spacing: 0.02em;
+  color: var(--text-color);
+}
+
+   /* =========================
+   FIXA TEXTFÄRGER PÅ FRAMSIDAN
+========================= */
+
+/* Gör portal-kortens text ljusare */
+.portal-card p,
+.portal-card h3,
+.portal-card .portal-btn {
+  color: #e2e8f0 !important; /* ljusare, neutral text */
+}
+
+/* Gör den lite nedtonade texten också ljusare */
+.portal-card p {
+  color: #cbd5e1 !important; /* ljusare grå istället för lila */
+}
+
+/* För ljusläge */
+body:not(.dark-mode) .portal-card p,
+body:not(.dark-mode) .portal-card h3,
+body:not(.dark-mode) .portal-card .portal-btn {
+  color: #1e293b !important; /* mörkgrå text i ljusläget */
+   /* --- Ikoner i portal-sektionen (ljusare för mörk bakgrund) --- */
+.portal-section i,
+.portal-section svg,
+.portal-section .icon {
+  color: #8ab4ff; /* ljus blå-lila som syns tydligt i mörkt tema */
+  text-shadow: 0 0 6px rgba(138, 180, 255, 0.3);
+}
+
+/* --- Länkarna i portalerna (ljusare och tydligare) --- */
+.portal-section a {
+  color: #a9b8ff;
+}
+
+.portal-section a:hover {
+  color: #cdd8ff;
+   /* --- Portal-sektion: tydliga färger i mörkt tema --- */
+.portal-section h3,
+.portal-section h2,
+.portal-section strong {
+  color: #dbe4ff !important;  /* Ljus vit/blå text */
+}
+
+.portal-section p {
+  color: #b8c6ff !important; /* Mild ljus text */
+}
+
+.portal-section a {
+  color: #9bb3ff !important;
+  text-decoration: none;
+}
+
+.portal-section a:hover {
+  color: #cdd8ff !important;
+  text-decoration: underline;
+}
+
+/* --- Ikonerna --- */
+.portal-section .icon {
+  font-size: 1.4rem;
+  color: #8ab4ff !important;
+  margin-right: 8px;
+  display: inline-block;
+  vertical-align: middle;
+   /* -------------------- PORTAL-SEKTION -------------------- */
+
+.portal-section {
+  background: rgba(255, 255, 255, 0.02);
+  padding: 40px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  margin: 40px auto;
+  width: 90%;
+  max-width: 900px;
+  backdrop-filter: blur(6px);
+}
+
+.portal-title {
+  font-size: 1.8rem;
+  margin-bottom: 25px;
+  color: #dbe4ff;
+  font-weight: 600;
+}
+
+/* BOXAR */
+.portal-box {
+  margin-bottom: 35px;
+  padding-bottom: 25px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.portal-box:last-child {
+  border-bottom: none;
+}
+
+/* RUBRIKER */
+.portal-box h3 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #e6edff;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Ikoner */
+.icon {
+  font-size: 1.6rem;
+  color: #9bc1ff;
+  text-shadow: 0 0 8px rgba(140, 180, 255, 0.3);
+}
+
+/* TEXT */
+.portal-box p {
+  font-size: 1rem;
+  margin: 10px 0 15px;
+  color: #b8c6ff;
+  max-width: 700px;
+}
+
+/* LÄNKAR */
+.portal-link {
+  font-size: 1rem;
+  color: #a9b8ff;
+  text-decoration: none;
+  font-weight: 500;
+  transition: 0.2s;
+}
+
+.portal-link:hover {
+  color: #d2dcff;
+  text-decoration: underline;
+}
+/* Tema-knapp */
+.theme-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 50%;
+  padding: 12px 14px;
+  font-size: 20px;
+  cursor: pointer;
+  color: #fff;
+  backdrop-filter: blur(6px);
+  transition: 0.2s;
+  z-index: 999;
+}
+
+.theme-toggle:hover {
+  background: rgba(255,255,255,0.2);
+}/* =========================
+   AI Chat Layout
+========================= */
+
+.chat-wrapper {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+  padding: 1.2rem;
+  margin-top: 1.5rem;
+  box-shadow: var(--shadow-soft);
+}
+
+.chat-box {
+  height: 380px;
+  overflow-y: auto;
+  padding: 1rem;
+  border-radius: var(--radius-xl);
+  background: var(--bg-soft);
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+/* Messages */
+.msg {
+  max-width: 85%;
+  padding: 0.75rem 1rem;
+  border-radius: 16px;
+  line-height: 1.45;
+  font-size: 0.95rem;
+}
+
+.user-msg {
+  align-self: flex-end;
+  background: var(--accent);
+  color: #0b0f14;
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.4);
+}
+
+.ai-msg {
+  align-self: flex-start;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(148, 163, 184, 0.25);
+}
+
+/* Input area */
+.chat-input-area {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.chat-input-area input {
+  flex: 1;
+  padding: 0.75rem;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-elevated);
+  color: var(--text-color);
+  outline: none;
+  font-size: 1rem;
+}
+
+.chat-input-area button {
+  background: var(--accent);
+  color: #0f1724;
+  border: none;
+  padding: 0 1.2rem;
+  border-radius: var(--radius-full);
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.chat-input-area button:hover {
+  background: var(--accent-strong);
+   .msg-label {
+  font-size: 0.75rem;
+  color: var(--muted-text);
+  margin-bottom: -6px;
+  padding-left: 4px;
+}
+
+
+
