@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="sv">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,7 +10,7 @@
   <script src="ai.js" defer></script>
 </head>
 
-<body class="dark-mode">
+<body class="dark-mode" data-category="A">
 
   <!-- NAVBAR -->
   <nav class="navbar">
@@ -20,37 +19,35 @@
 
   <!-- HERO -->
   <header class="hero">
-    <h1>💬 AI-stöd</h1>
-    <p>Skriv av dig i lugn och ro. AI:n svarar mjukt och empatiskt – i din takt.</p>
+    <h1>💬 <span id="ai-title">AI-stöd</span></h1>
+    <p id="ai-subtitle">
+      Skriv av dig i lugn och ro. AI:n svarar mjukt och empatiskt – i din takt.
+    </p>
   </header>
 
   <!-- MAIN -->
   <main>
-
     <div class="chat-wrapper">
 
-      <!-- CHAT FÖNSTER -->
-      <div id="chat-box" class="chat-box">
+      <!-- CHAT -->
+      <div id="ai-messages" class="chat-box"></div>
 
-        <div class="msg ai-msg">
-          <div class="msg-label">Stöd-AI</div>
-          <p>Hej! Jag är här med dig. Vad vill du prata om idag? 💛</p>
-        </div>
-
-      </div>
-
-      <!-- SKRIVFÄLT -->
-      <div class="chat-input-area">
-        <input 
-          id="user-input" 
-          type="text" 
-          placeholder="Skriv ett meddelande..."
-          onkeydown="if(event.key === 'Enter') sendMessage()"
+      <!-- INPUT -->
+      <form id="ai-form" class="chat-input">
+        <input
+          id="ai-input"
+          type="text"
+          placeholder="Skriv här..."
+          autocomplete="off"
         />
-        <button onclick="sendMessage()">➤</button>
-      </div>
+        <button type="submit">Skicka</button>
+      </form>
 
     </div>
+  </main>
+
+</body>
+</html>
 
   </main>
 

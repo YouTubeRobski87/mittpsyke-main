@@ -1,0 +1,58 @@
+<header class="site-header">
+  <div class="header-inner container">
+
+    <!-- Logotyp / titel -->
+    <div class="site-brand">
+      <a href="/" class="site-logo">
+        Mitt<span>Psyke</span>
+      </a>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="main-nav" aria-label="Huvudnavigation">
+  <ul class="nav-list">
+    <li>
+      <a href="/"
+         class="nav-link{% if page.url == '/' %} is-active{% endif %}">
+        Hem
+      </a>
+    </li>
+
+    <li>
+      <a href="/a/"
+         class="nav-link{% if page.url startsWith '/a/' %} is-active{% endif %}">
+        Ångest (A)
+      </a>
+    </li>
+
+    <li>
+      <a href="/b/"
+         class="nav-link{% if page.url startsWith '/b/' %} is-active{% endif %}">
+        Depression (B)
+      </a>
+    </li>
+
+    <li>
+      <a href="/e/"
+         class="nav-link{% if page.url startsWith '/e/' %} is-active{% endif %}">
+        Trauma (E)
+      </a>
+    </li>
+
+    <li>
+      <a href="/ai/"
+         class="nav-link nav-cta{% if page.url startsWith '/ai/' %} is-active{% endif %}">
+        AI-stöd
+      </a>
+    </li>
+  </ul>
+</nav>
+
+
+    <!-- Mobilmeny-knapp (om du redan har stöd i CSS/JS) -->
+    <button class="nav-toggle" aria-label="Öppna meny">
+      ☰
+    </button>
+
+  </div>
+</header>

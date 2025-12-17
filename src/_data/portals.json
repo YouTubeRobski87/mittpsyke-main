@@ -1,0 +1,23 @@
+[
+  {
+    "key": "a",
+    "title": "Ångest (A)",
+    "description": "När oro, stress eller panikkänslor tar över.",
+    "icon": "😰",
+    "url": "/a/"
+  },
+  {
+    "key": "b",
+    "title": "Depression (B)",
+    "description": "När livet känns tungt, tomt eller meningslöst.",
+    "icon": "🌧️",
+    "url": "/b/"
+  },
+  {
+    "key": "e",
+    "title": "Trauma (E)",
+    "description": "För dig som varit med om något svårt eller skrämmande.",
+    "icon": "🛡️",
+    "url": "/e/"
+  }
+]

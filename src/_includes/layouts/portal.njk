@@ -1,0 +1,19 @@
+---
+layout: base.njk
+---
+
+<main class="container">
+
+  <section class="hero-card">
+    <h1>{{ title }}</h1>
+
+    {% if intro %}
+      <p>{{ intro }}</p>
+    {% endif %}
+  </section>
+
+  <section class="content">
+    {{ content | safe }}
+  </section>
+
+</main>

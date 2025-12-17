@@ -1,0 +1,29 @@
+@font-face {
+  font-family: 'Recursive';
+  src: url('../fonts/recursive/Recursive.woff2') format('woff2'),
+    url('../fonts/recursive/Recursive.woff') format('woff'),
+    url('../fonts/recursive/Recursive.ttf') format('truetype');
+  font-weight: 300 1000;
+  font-style: oblique -15deg 0deg;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Shantell Sans';
+  src: url('../fonts/shantell-sans/ShantellSans.woff2') format('woff2'),
+    url('../fonts/shantell-sans/ShantellSans.woff') format('woff'),
+    url('../fonts/shantell-sans/ShantellSans.ttf') format('truetype');
+  font-weight: 300 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Shantell Sans';
+  src: url('../fonts/shantell-sans/ShantellSans.woff2') format('woff2'),
+    url('../fonts/shantell-sans/ShantellSans.woff') format('woff'),
+    url('../fonts/shantell-sans/ShantellSans.ttf') format('truetype');
+  font-weight: 300 800;
+  font-style: italic;
+  font-display: swap;
+}

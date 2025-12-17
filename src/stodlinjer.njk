@@ -1,0 +1,20 @@
+---
+layout: layouts/page.njk
+title: Alla stödlinjer
+subtitle: Svenska hjälplinjer och stödorganisationer
+permalink: /stodlinjer/
+fullWidth: true
+---
+
+<div class="page-intro">
+  <p class="text-muted" style="margin-bottom: var(--space-2xl);">
+    Här har vi samlat {{ supportlines | length }} svenska stödlinjer för psykisk hälsa, våld, missbruk och kris. 
+    Kontrollera alltid aktuella öppettider på respektive webbplats.
+  </p>
+</div>
+
+<div class="support-grid">
+  {% for line in supportlines %}
+  {% include "partials/support-card.njk" %}
+  {% endfor %}
+</div>

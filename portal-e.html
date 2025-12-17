@@ -1,148 +1,49 @@
 <!DOCTYPE html>
 <html lang="sv">
 <head>
+  <link rel="stylesheet" href="/fonts.css">
+  <link rel="stylesheet" href="/base.css">
+  <link rel="stylesheet" href="/components.css">
+  <link rel="stylesheet" href="/main.css">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Trauma & Våld | MittPsyke</title>
-  <link rel="stylesheet" href="style.css">
+  <title>AI-stöd | MittPsyke</title>
+
+  <script src="ai.js" defer></script>
 </head>
 
-<body class="dark-mode">
+<body class="dark-mode" data-category="E">
 
-<nav class="navbar">
-  <a href="index.html">Hem</a>
-</nav>
+  <!-- NAV -->
+  <nav class="navbar">
+    <a href="index.html">Hem</a>
+  </nav>
 
-<header class="hero">
-  <h1>🕊️ Trauma & Våld</h1>
-  <p>Du förtjänar trygghet. Här får du hjälp att bearbeta det som hänt – i din takt.</p>
-</header>
+  <!-- HERO -->
+  <header class="hero">
+   <h1>💬 AI-stöd – Trauma</h1>
+<p>Här kan du skriva tryggt om svåra upplevelser, rädsla eller våld.</p>
 
-<main>
+  </header>
 
-  <section class="portal-section">
-    <h2 class="portal-title">Vad behöver du?</h2>
+  <!-- CHAT -->
+  <main>
+    <div class="chat-wrapper">
 
-    <div class="portal-box">
-      <h3>🧩 Förstå reaktionerna</h3>
-      <p>Kroppen och hjärnan reagerar på trauma på många sätt – få hjälp att förstå vad som sker.</p>
-      <a class="portal-link" href="ai.html">Starta AI-stödet →</a>
+      <div id="ai-messages" class="chat-box"></div>
+
+      <form id="ai-form" class="chat-input">
+        <input
+          id="ai-input"
+          type="text"
+          placeholder="Skriv här…"
+          autocomplete="off"
+        />
+        <button type="submit">Skicka</button>
+      </form>
+
     </div>
-
-    <div class="portal-box">
-      <h3>🛡️ Trygghet & stabilisering</h3>
-      <p>Övningar för att få ner stress, återta kontroll och hitta lugn.</p>
-      <a class="portal-link" href="ai.html">Prova verktygen →</a>
-    </div>
-
-    <div class="portal-box">
-      <h3>📞 Stödlinjer för trauma & våld</h3>
-      <ul>
-        <li><a href="https://kvinnojouren.se" target="_blank">Kvinnofridslinjen</a></li>
-        <li><a href="https://mansjouren.se" target="_blank">Mansjouren</a></li>
-        <li><a href="https://ungaombud.se" target="_blank">Stöd för unga</a></li>
-      </ul>
-    </div>
-
-  </section>
-
-</main>
-
-<button class="theme-toggle" onclick="toggleTheme()">🌙</button>
-<script src="theme.js"></script>
-
-</body>
-</html>
-</section>
-
-<section class="portal-section">
-    <h2>Dagens rekommendation</h2>
-    <p class="support-text">
-        Trauma är inte ditt fel.  
-        Låt kroppen få en chans att känna sig lite tryggare innan du går vidare.
-    </p>
-    <a href="ai.html?portal=E" class="hero-btn">💬 Starta AI-stödet</a>
-</section>
-
-<!-- AI-BUBBLOR -->
-<section class="portal-section ai-section">
-
-    <div class="ai-bubble">
-        <h3>🛡 Du är inte i fara nu</h3>
-        <p>
-            Trauma får kroppen att reagera som om det svåra fortfarande pågår.
-            Men just nu – här – är du i säkerhet. Du får andas ut.
-        </p>
-    </div>
-
-    <div class="ai-bubble">
-        <h3>🌫 Det du känner är en normal reaktion</h3>
-        <p>
-            Flashbacks, ilska, rädsla eller avstängdhet är inte ett tecken på svaghet.
-            Det är kroppens sätt att försöka skydda dig efter något som var för mycket.
-        </p>
-    </div>
-
-    <div class="ai-bubble">
-        <h3>🧘 En snabb trygghetsövning</h3>
-        <p>
-            Lägg en hand över bröstet och en över magen.  
-            Säg tyst för dig själv:
-        </p>
-        <p><strong>“Just nu finns ingen fara. Jag är här. Jag är trygg.”</strong></p>
-    </div>
-
-    <div class="ai-bubble">
-        <h3>🤝 Du bär inte ansvaret för det som hände</h3>
-        <p>
-            Många som varit med om svåra saker känner skuld.  
-            Men det du gick igenom var inte ditt fel – och det förändrar inte ditt värde.
-        </p>
-    </div>
-
-    <div class="ai-bubble">
-        <h3>➡️ Hur vill du gå vidare?</h3>
-        <p>Jag kan hjälpa dig med:</p>
-        <ul>
-            <li>🧘 Stabiliseringsövningar</li>
-            <li>🛡 Hur man hanterar flashbacks</li>
-            <li>🌿 Trygghetsstrategier</li>
-            <li>🤍 Hur man söker stöd på riktigt</li>
-        </ul>
-    </div>
-
-</section>
-<!-- SLUT AI-BUBBLOR -->
-
-<section class="portal-section">
-    <h2>Stödverktyg vid trauma</h2>
-
-    <div class="tool-grid">
-        <button class="tool-btn">🛡 Trygg plats</button>
-        <button class="tool-btn">🧘 Stabilisering</button>
-        <button class="tool-btn">🌬 Andning</button>
-        <button class="tool-btn">📓 Skriv av dig</button>
-        <button class="tool-btn">🖼 Visualisering</button>
-        <button class="tool-btn">💬 Prata med någon</button>
-    </div>
-</section>
-
-<footer class="footer">
-    <p>Du förtjänar trygghet. Portalen står vid din sida.</p>
-</footer>
-
-<script>
-function toggleTheme() {
-    const body = document.body;
-    body.classList.toggle("dark-mode");
-    localStorage.setItem("mp-theme", body.classList.contains("dark-mode") ? "dark" : "light");
-}
-if (localStorage.getItem("mp-theme") === "dark") {
-   document.body.classList.add("dark-mode");
-}
-</script>
-<button class="theme-toggle" onclick="toggleTheme()">🌙</button>
-<script src="theme.js"></script>
+  </main>
 
 </body>
 </html>

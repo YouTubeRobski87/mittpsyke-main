@@ -1,0 +1,123 @@
+/* ==========================================================================
+   Cards – gemensam struktur
+   ========================================================================== */
+
+.cards {
+  margin-top: 2rem;
+}
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+}
+
+/* ==========================================================================
+   Card-varianter
+   ========================================================================== */
+
+.card {
+  display: block;
+  padding: 1.75rem;
+  background: var(--card);
+  border: 1px solid var(--border); /* ← RAMEN */
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+}
+
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-strong);
+}
+
+.strong-card {
+  background: var(--card);
+  box-shadow: var(--shadow-strong);
+}
+
+/* ==========================================================================
+   Card-innehåll
+   ========================================================================== */
+
+.card-icon {
+  font-size: 2.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.card-title {
+  margin-bottom: 0.4rem;
+}
+
+.card-text {
+  color: var(--muted);
+  margin-bottom: 1rem;
+}
+
+.card-link {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+/* ==========================================================================
+   Portal-cards (A / B / E – större variant)
+   ========================================================================== */
+
+.portal-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.portal-card {
+  background: var(--card);
+  border-radius: 16px;
+  padding: 1.75rem;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+}
+
+.portal-card:hover {
+  box-shadow: var(--shadow-strong);
+}
+
+.portal-card h3 {
+  margin-bottom: 0.5rem;
+}
+
+.portal-card p {
+  color: var(--muted);
+}
+
+/* Kategori-kort – Stödlinjer-inspirerad ram */
+
+.card {
+  display: block;
+  padding: 1.75rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+  transition: border-color 150ms ease, box-shadow 150ms ease, transform 150ms ease;
+}
+
+.card:hover {
+  border-color: var(--accent);
+  box-shadow: var(--shadow-strong);
+  transform: translateY(-2px);
+}
+
+/* Diskret men SYNLIG aktiv kategori */
+
+body.portal-a a[href="/a/"],
+body.portal-b a[href="/b/"],
+body.portal-e a[href="/e/"] {
+  border-color: var(--accent);
+  box-shadow: var(--shadow-strong);
+}
+
+.card {
+  border: 2px solid red !important;
+}
+

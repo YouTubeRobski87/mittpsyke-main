@@ -1,73 +1,66 @@
-export async function handler(event) {
-  if (event.httpMethod !== "POST") {
-    return {
-      statusCode: 405,
-      body: "Only POST allowed",
-    };
-  }
+const category = document.body.dataset.category || "A";
 
-  let message = "";
+const form = document.getElementById("ai-form");
+const input = document.getElementById("ai-input");
+const messages = document.getElementById("ai-messages");
+
+const USER_NAME = "Robban"; // eller "Du"
+const AI_NAME = "MittPsyke";
+
+// Startmeddelande per kategori
+const introByCategory = {
+  A: "Hej 💛 Jag är här med dig. Vill du berätta vad som känns oroligt just nu?",
+  B: "Hej 💛 Vi kan ta det lugnt här. Vad har känts tyngst på sistone?",
+  E: "Hej 💛 Du bestämmer helt själv vad du vill dela. Jag lyssnar, och du har kontroll här."
+};
+
+addMessage("bot", introByCategory[category] || introByCategory.A);
+
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const text = input.value.trim();
+  if (!text) return;
+
+  addMessage("user", text);
+  input.value = "";
+
   try {
-    const body = JSON.parse(event.body);
-    message = (body.message || "").toLowerCase();
-  } catch {
-    message = "";
+    const res = await fetch("/.netlify/functions/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        message: text,
+        category: category
+      })
+    });
+
+    const data = await res.json();
+    addMessage("bot", data.answer || "Jag är här med dig.");
+
+  } catch (err) {
+    addMessage(
+      "bot",
+      "Det blev ett tekniskt fel. Vill du prova igen?"
+    );
   }
+});
 
-  let reply = "Jag finns här 💛 Vill du berätta lite mer?";
+function addMessage(role, text) {
+  const wrapper = document.createElement("div");
+  wrapper.className = `message ${role}`;
 
-  // Hälsningar
-  if (["hej", "hallå", "hejsan"].some(w => message.startsWith(w))) {
-    reply = "Hej 💛 Vad vill du prata om just nu?";
-  }
+  const name = document.createElement("div");
+  name.className = "name";
+  name.textContent = role === "user" ? USER_NAME : AI_NAME;
 
-  // Förvirring / korta svar
-  else if (["va", "vad", "jaha", "okej"].includes(message.trim())) {
-    reply = "Det är helt okej 💛 Vill du att jag förklarar eller vill du säga något mer?";
-  }
+  const bubble = document.createElement("div");
+  bubble.className = "content";
+  bubble.textContent = text;
 
-  // Stress / oro
-  else if (
-    message.includes("stress") ||
-    message.includes("orolig") ||
-    message.includes("ångest")
-  ) {
-    reply =
-      "Det låter jobbigt 💛 När stressen eller oron kommer – var i kroppen brukar du känna den mest?";
-  }
+  wrapper.appendChild(name);
+  wrapper.appendChild(bubble);
+  messages.appendChild(wrapper);
 
-  // Trötthet / tomhet
-  else if (
-    message.includes("trött") ||
-    message.includes("utmattad") ||
-    message.includes("orkar inte")
-  ) {
-    reply =
-      "Det låter som att du bär på mycket 💛 Har du haft möjlighet att vila något, eller känns det svårt just nu?";
-  }
-
-  // Nedstämdhet
-  else if (
-    message.includes("ledsen") ||
-    message.includes("deppig") ||
-    message.includes("tom")
-  ) {
-    reply =
-      "Jag är ledsen att du känner så 💛 Vill du berätta vad som ligger bakom känslan?";
-  }
-
-  // Bekräftelse
-  else if (
-    message.includes("bra") ||
-    message.includes("tack") ||
-    message.includes("skönt")
-  ) {
-    reply = "Vad fint att höra 💛 Jag är här med dig.";
-  }
-
-  return {
-    statusCode: 200,
-    headers: { "Content-Type": "text/plain; charset=utf-8" },
-    body: reply,
-  };
+  messages.scrollTop = messages.scrollHeight;
 }

@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="utf-8">
+  <title>{{ title }}</title>
+  <!-- css, meta osv -->
+</head>
+
+<body class="{{ bodyClass | default('') }}">
+  {{ content | safe }}
+</body>
+</html>
+
