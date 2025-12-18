@@ -1,4 +1,4 @@
----
+﻿---
 layout: layouts/base.njk
 title: Ditt stöd – på dina villkor
 ---
@@ -8,10 +8,22 @@ title: Ditt stöd – på dina villkor
     <div class="hero-content">
       <h1>{{ site.title }}</h1>
       <p class="tagline">{{ site.tagline }}</p>
-
-      {# Akuta linjer - alltid synliga #}
-      <div class="hotline-grid" style="margin-bottom: var(--space-2xl);">
-        {% include "partials/hotline-cards.njk" %}
+      <div class="hero-actions" style="margin-top: var(--space-xl); display: flex; justify-content: center;">
+        <a
+          href="/ai/"
+          style="
+            display: inline-block;
+            padding: 12px 20px;
+            background: var(--accent);
+            color: var(--on-accent);
+            border-radius: var(--radius-full);
+            font-weight: 600;
+            text-decoration: none;
+            box-shadow: var(--shadow);
+          "
+        >
+          Starta AI-stöd
+        </a>
       </div>
     </div>
   </div>
@@ -35,13 +47,20 @@ title: Ditt stöd – på dina villkor
   </div>
 </section>
 
+<section class="container urgent-lines">
+  <h2 style="text-align: center; margin-bottom: var(--space-xl);">Akuta linjer</h2>
+  <div class="hotline-grid">
+    {% include "partials/hotline-cards.njk" %}
+  </div>
+</section>
+
 {# Citat #}
 {% set randomQuote = quotes | random %}
 <section class="quote-section">
   <div class="container">
     <blockquote class="quote">
       <p>"{{ randomQuote.text }}"</p>
-      <cite>— {{ randomQuote.author }}</cite>
+      <cite>&ndash; {{ randomQuote.author }}</cite>
     </blockquote>
   </div>
 </section>
@@ -56,6 +75,6 @@ title: Ditt stöd – på dina villkor
   </div>
 
   <p style="text-align: center; margin-top: var(--space-xl);">
-    <a href="/stodlinjer/" style="font-weight: 600;">Se alla {{ supportlines | length }} stödlinjer →</a>
+    <a href="/stodlinjer/" style="font-weight: 600;">Se alla {{ supportlines | length }} stödlinjer &rarr;</a>
   </p>
 </section>

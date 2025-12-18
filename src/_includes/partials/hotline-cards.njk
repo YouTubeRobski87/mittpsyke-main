@@ -1,0 +1,19 @@
+﻿<div class="hotline-grid">
+  {% for hotline in hotlines %}
+    {% set tel = hotline.tel or hotline.number %}
+    <a
+      class="hotline-card{% if hotline.variant %} hotline-{{ hotline.variant }}{% endif %}"
+      href="tel:{{ tel | telHref }}"
+      aria-label="Ring {{ hotline.name }}"
+    >
+      <span class="hotline-label">{{ hotline.name }}</span>
+      <span class="hotline-number">
+        <i class="fas fas-phone-volume hotline-number-icon" aria-hidden="true"></i>
+        <span class="hotline-number-text">{{ hotline.number }}</span>
+      </span>
+      {% if hotline.availability %}
+        <span class="hotline-availability">{{ hotline.availability }}</span>
+      {% endif %}
+    </a>
+  {% endfor %}
+</div>

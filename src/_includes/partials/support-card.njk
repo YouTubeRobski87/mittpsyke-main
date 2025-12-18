@@ -1,0 +1,30 @@
+﻿{% set tel = line.number %}
+<article class="support-card{% if line.urgent %} support-card--urgent{% endif %}">
+  <header class="support-card-header">
+    <h3>{{ line.name }}</h3>
+    {% if line.urgent %}
+      <span class="badge-urgent">Akut</span>
+    {% endif %}
+  </header>
+
+  {% if line.description %}
+    <p class="support-description">{{ line.description }}</p>
+  {% endif %}
+
+  <div class="support-card-footer">
+    {% if tel %}
+      <a class="support-phone" href="tel:{{ tel | telHref }}">
+        <i class="fas fas-phone-volume support-phone-icon" aria-hidden="true"></i>
+        <span class="support-phone-number">{{ tel }}</span>
+      </a>
+    {% endif %}
+
+    {% if line.available %}
+      <span class="support-availability">{{ line.available }}</span>
+    {% endif %}
+
+    {% if line.url %}
+      <a class="support-link" href="{{ line.url }}" target="_blank" rel="noreferrer">Besök webbplats</a>
+    {% endif %}
+  </div>
+</article>

@@ -1,4 +1,4 @@
-const category = document.body.dataset.category || "A";
+﻿const category = document.body.dataset.category || "A";
 
 const form = document.getElementById("ai-form");
 const input = document.getElementById("ai-input");
@@ -35,10 +35,24 @@ form.addEventListener("submit", async (e) => {
       })
     });
 
-    const data = await res.json();
+    let data = {};
+    try { data = await res.json(); } catch (_) {}
+
+    if (!res.ok) {
+      const msg = (data && data.error) || `Fel ${res.status}`;
+      if (String(msg).toLowerCase().includes('api key')) {
+        throw new Error('missing_api_key');
+      }
+      throw new Error(msg);
+    }
+
     addMessage("bot", data.answer || "Jag är här med dig.");
 
   } catch (err) {
+    if (err?.message === 'missing_api_key') {
+      addMessage("bot", "AI:n är offline just nu (saknar API-nyckel). Lägg in nyckeln och prova igen.");
+      return;
+    }
     addMessage(
       "bot",
       "Det blev ett tekniskt fel. Vill du prova igen?"

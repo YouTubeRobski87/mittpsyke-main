@@ -1,13 +1,21 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="sv">
 <head>
-  <meta charset="utf-8">
-  <title>{{ title }}</title>
-  <!-- css, meta osv -->
+  {% include "partials/head.njk" %}
+  {% block headExtra %}{% endblock %}
 </head>
+<body class="{{ bodyClass | default('page-shell') }}">
+  {% block header %}
+    {% include "partials/header.njk" %}
+  {% endblock %}
 
-<body class="{{ bodyClass | default('') }}">
-  {{ content | safe }}
+  {% block content %}
+    {{ content | safe }}
+  {% endblock %}
+
+  {% block footer %}
+    {% include "partials/footer.njk" %}
+  {% endblock %}
+  {% block scripts %}{% endblock %}
 </body>
 </html>
-

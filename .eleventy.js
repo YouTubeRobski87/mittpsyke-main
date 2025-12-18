@@ -34,6 +34,11 @@ module.exports = function (eleventyConfig) {
 
   // Kopiera assets till output
   eleventyConfig.addPassthroughCopy('src/assets');
+  eleventyConfig.addPassthroughCopy({
+    './ai.js': 'assets/js/ai.js',
+    './theme.js': 'assets/js/theme.js',
+    './style.css': 'assets/css/ai.css'
+  });
 
   // Watch för CSS och JS ändringar
   eleventyConfig.addWatchTarget('src/assets/');
