@@ -1,5 +1,10 @@
-const params = new URLSearchParams(window.location.search);
-const context = (params.get("context") || "").toLowerCase();
+let contextRaw = new URLSearchParams(window.location.search).get("context") || "";
+// Normalize context: strip leading/trailing slashes and optional "portaler/" prefix
+contextRaw = contextRaw.replace(/^\/+|\/+$/g, "");
+if (contextRaw.toLowerCase().startsWith("portaler/")) {
+  contextRaw = contextRaw.slice("portaler/".length);
+}
+const context = contextRaw.toLowerCase();
 
 const contextToCategory = {
   angest: "A",
@@ -127,4 +132,3 @@ function addMessage(role, text) {
 
   messages.scrollTop = messages.scrollHeight;
 }
-
