@@ -1,20 +1,68 @@
-Ôªøconst category = document.body.dataset.category || "A";
+const params = new URLSearchParams(window.location.search);
+const context = (params.get("context") || "").toLowerCase();
+
+const contextToCategory = {
+  angest: "A",
+  "Ângest": "A",
+  depression: "B",
+  trauma: "E",
+  sjalvmordstankar: "E",
+  "sj‰lvmordstankar": "E",
+  sjalvskadebeteende: "E",
+  "sj‰lvskadebeteende": "E"
+};
+
+const friendlyLabelByContext = {
+  angest: "≈ngest",
+  "Ângest": "≈ngest",
+  depression: "Depression",
+  trauma: "Trauma",
+  sjalvmordstankar: "Sj‰lvmordstankar",
+  "sj‰lvmordstankar": "Sj‰lvmordstankar",
+  sjalvskadebeteende: "Sj‰lvskadebeteende",
+  "sj‰lvskadebeteende": "Sj‰lvskadebeteende"
+};
+
+const categoryFromBody = document.body.dataset.category || "A";
+const category = contextToCategory[context] || categoryFromBody || "A";
+document.body.dataset.category = category;
 
 const form = document.getElementById("ai-form");
 const input = document.getElementById("ai-input");
 const messages = document.getElementById("ai-messages");
+const contextNote = document.getElementById("ai-context-note");
 
 const USER_NAME = "Robban"; // eller "Du"
 const AI_NAME = "MittPsyke";
 
 // Startmeddelande per kategori
 const introByCategory = {
-  A: "Hej üíõ Jag √§r h√§r med dig. Vill du ber√§tta vad som k√§nns oroligt just nu?",
-  B: "Hej üíõ Vi kan ta det lugnt h√§r. Vad har k√§nts tyngst p√• sistone?",
-  E: "Hej üíõ Du best√§mmer helt sj√§lv vad du vill dela. Jag lyssnar, och du har kontroll h√§r."
+  A: "Hej! Jag ‰r h‰r med dig. Vill du ber‰tta vad som k‰nns oroligt just nu?",
+  B: "Hej! Vi kan ta det lugnt h‰r. Vad har k‰nts tyngst pÂ sistone?",
+  E: "Hej! Du best‰mmer helt sj‰lv vad du vill dela. Jag lyssnar, och du har kontroll h‰r."
 };
 
-addMessage("bot", introByCategory[category] || introByCategory.A);
+const introByContext = {
+  angest: "Du har valt ≈ngest ñ jag finns h‰r. Vill du ber‰tta lite om hur det k‰nns?",
+  depression: "Du har valt Depression ñ vi tar det lugnt. Vill du ber‰tta vad som k‰nts tyngst?",
+  trauma: "Du har valt Trauma ñ du har kontroll h‰r. Vill du dela nÂgot litet om hur du har det?",
+  sjalvmordstankar: "Du har valt Sj‰lvmordstankar ñ jag lyssnar utan att dˆma. Vill du ber‰tta hur det k‰nns just nu?",
+  sjalvskadebeteende: "Du har valt Sj‰lvskadebeteende ñ vi tar det varsamt. Vill du s‰ga nÂgot om vad som triggar mest?"
+};
+
+const intro = introByContext[context] || introByCategory[category] || introByCategory.A;
+
+if (contextNote) {
+  const label = friendlyLabelByContext[context];
+  if (label) {
+    contextNote.textContent = `Du valde ${label} ñ jag finns h‰r, vill du ber‰tta lite?`;
+    contextNote.style.display = "block";
+  } else {
+    contextNote.style.display = "none";
+  }
+}
+
+addMessage("bot", intro);
 
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -31,7 +79,8 @@ form.addEventListener("submit", async (e) => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         message: text,
-        category: category
+        category: category,
+        context: context
       })
     });
 
@@ -46,11 +95,11 @@ form.addEventListener("submit", async (e) => {
       throw new Error(msg);
     }
 
-    addMessage("bot", data.answer || "Jag √§r h√§r med dig.");
+    addMessage("bot", data.answer || "Jag ‰r h‰r med dig.");
 
   } catch (err) {
     if (err?.message === 'missing_api_key') {
-      addMessage("bot", "AI:n √§r offline just nu (saknar API-nyckel). L√§gg in nyckeln och prova igen.");
+      addMessage("bot", "AI:n ‰r offline just nu (saknar API-nyckel). L‰gg in nyckeln och prova igen.");
       return;
     }
     addMessage(
@@ -78,3 +127,4 @@ function addMessage(role, text) {
 
   messages.scrollTop = messages.scrollHeight;
 }
+

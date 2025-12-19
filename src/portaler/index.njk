@@ -10,7 +10,7 @@ fullWidth: true
 
 <div class="portal-grid">
   {% for portal in collections.portaler %}
-  <a href="{{ portal.url }}" class="portal-card">
+  <a href="{{ baseUrl }}/ai/?context={{ portal.fileSlug }}" class="portal-card">
     <span class="portal-card-icon">{% icon portal.data.icon, "portal-card-icon-glyph" %}</span>
     <h3>{{ portal.data.title }}</h3>
     <p class="portal-card-description">{{ portal.data.description | truncateWords(15) }}</p>

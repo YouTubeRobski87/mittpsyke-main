@@ -17,10 +17,11 @@ export async function handler(event) {
   }
 
   try {
-    const { message = "", category = "A" } = JSON.parse(event.body || "{}");
+    const { message = "", category = "A", context = "" } = JSON.parse(event.body || "{}");
     const snippet = sanitizeSnippet(message);
+    const contextSnippet = sanitizeSnippet(context, 80);
 
-    console.log("chat:incoming", { category, snippet });
+    console.log("chat:incoming", { category, context: contextSnippet, snippet });
 
     if (!message.trim()) {
       return {
@@ -54,6 +55,13 @@ Du är trygg och varsam med någon som varit med om trauma/våld.
     };
 
     const systemPrompt = systemPrompts[category] || systemPrompts.A;
+    const systemMessages = [{ role: "system", content: systemPrompt }];
+    if (contextSnippet) {
+      systemMessages.push({
+        role: "system",
+        content: `Användaren söker stöd kring: ${contextSnippet}`
+      });
+    }
 
     const response = await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
@@ -63,10 +71,7 @@ Du är trygg och varsam med någon som varit med om trauma/våld.
       },
       body: JSON.stringify({
         model: "gpt-4.1-mini",
-        messages: [
-          { role: "system", content: systemPrompt },
-          { role: "user", content: message }
-        ],
+        messages: [...systemMessages, { role: "user", content: message }],
         temperature: 0.6,
         max_tokens: 350
       })
