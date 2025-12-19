@@ -140,14 +140,15 @@ disableFooter: true
         });
       }
 
-      setButtonsEnabled(false);
+      setButtonsEnabled(true);
 
       var ready = window.mpSupabaseReady || Promise.resolve(window.mpSupabase);
       ready
         .then(function (client) {
-          if (!client) throw new Error('Supabase-klient saknas');
-
-          setButtonsEnabled(true);
+          if (!client) {
+            console.error('Supabase-klient saknas.');
+            return;
+          }
 
           function redirectIfLogged() {
             client.auth.getSession().then(function (res) {
@@ -198,6 +199,7 @@ disableFooter: true
         })
         .catch(function (err) {
           console.error('Supabase-klient saknas.', err);
+          setButtonsEnabled(true);
         });
     })();
   </script>
