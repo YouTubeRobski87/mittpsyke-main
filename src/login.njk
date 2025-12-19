@@ -97,38 +97,37 @@ disableFooter: true
   <div class="login-shell">
     <h1 class="login-title">Spara dina samtal (valfritt)</h1>
     <p class="login-lede">
-      Om du vill kan du logga in f&ouml;r att forts&auml;tta AI-st&ouml;det &ouml;ver tid.
-      Du kan ocks&aring; anv&auml;nda AI-st&ouml;det utan konto.
+      Om du vill kan du logga in för att fortsätta AI-stödet över tid.
+      Du kan också använda AI-stödet utan konto.
     </p>
 
     <div class="login-input">
       <label for="login-email">E-post</label>
       <input id="login-email" type="email" name="email" placeholder="din@epost.se" data-email-input />
-      <p class="login-hint">Fyll i e-post och v&auml;lj Google eller E-postl&auml;nk f&ouml;r att forts&auml;tta.</p>
+      <p class="login-hint">Fyll i e-post och välj Google eller E-postlänk för att fortsätta.</p>
     </div>
 
     <div class="login-actions">
       <a class="login-btn" href="#" data-login-action="google">
-        <span>Forts&auml;tt med Google</span>
+        <span>Fortsätt med Google</span>
       </a>
       <a class="login-btn secondary" href="#" data-login-action="magic">
-        <span>F&aring; l&auml;nk via e-post (magic link)</span>
+        <span>Få länk via e-post (magic link)</span>
       </a>
     </div>
 
     <p class="login-note">
-      Inloggning g&ouml;r att AI-st&ouml;det kan minnas vad ni pratat om.
-      Du best&auml;mmer alltid sj&auml;lv vad som sparas.
+      Inloggning gör att AI-stödet kan minnas vad ni pratat om.
+      Du bestämmer alltid själv vad som sparas.
     </p>
 
-    <p class="login-footnote">Kom ih&aring;g: AI-st&ouml;det fungerar &auml;ven utan inloggning.</p>
+    <p class="login-footnote">Kom ihåg: AI-stödet fungerar även utan inloggning.</p>
   </div>
 </main>
 
 {% block scripts %}
   <script>
     (function () {
-      var client = window.mpSupabase;
       var googleBtn = document.querySelector('[data-login-action="google"]');
       var magicBtn = document.querySelector('[data-login-action="magic"]');
       var emailInput = document.querySelector('[data-email-input]');
@@ -141,58 +140,65 @@ disableFooter: true
         });
       }
 
-      if (!client) {
-        setButtonsEnabled(false);
-        console.error('Supabase-klient saknas.');
-        return;
-      }
+      setButtonsEnabled(false);
 
-      function redirectIfLogged() {
-        client.auth.getSession().then(function (res) {
-          if (res && res.data && res.data.session) {
-            window.location.href = '/ai/';
-          }
-        });
-      }
+      var ready = window.mpSupabaseReady || Promise.resolve(window.mpSupabase);
+      ready
+        .then(function (client) {
+          if (!client) throw new Error('Supabase-klient saknas');
 
-      redirectIfLogged();
-
-      client.auth.onAuthStateChange(function (event, session) {
-        if (event === 'SIGNED_IN' && session) {
-          window.location.href = '/ai/';
-        }
-      });
-
-      function handleMagicLink() {
-        var email = emailInput ? emailInput.value.trim() : '';
-        if (!email) {
-          alert('Ange en e-postadress f&ouml;rst.');
-          return;
-        }
-        setButtonsEnabled(false);
-        client.auth.signInWithOtp({ email: email }).then(function (res) {
           setButtonsEnabled(true);
-          if (res.error) {
-            alert('Kunde inte skicka l&auml;nk: ' + res.error.message);
-            return;
+
+          function redirectIfLogged() {
+            client.auth.getSession().then(function (res) {
+              if (res && res.data && res.data.session) {
+                window.location.href = '/ai/';
+              }
+            });
           }
-          alert('Kolla din e-post f&ouml;r en magisk l&auml;nk.');
-        });
-      }
 
-      function handleGoogle() {
-        setButtonsEnabled(false);
-        client.auth.signInWithOAuth({
-          provider: 'google',
-          options: { redirectTo: window.location.origin + '/ai/' }
-        }).then(function (res) {
-          setButtonsEnabled(true);
-          if (res.error) alert('Kunde inte logga in: ' + res.error.message);
-        });
-      }
+          redirectIfLogged();
 
-      if (googleBtn) googleBtn.addEventListener('click', function (e) { e.preventDefault(); handleGoogle(); });
-      if (magicBtn) magicBtn.addEventListener('click', function (e) { e.preventDefault(); handleMagicLink(); });
+          client.auth.onAuthStateChange(function (event, session) {
+            if (event === 'SIGNED_IN' && session) {
+              window.location.href = '/ai/';
+            }
+          });
+
+          function handleMagicLink() {
+            var email = emailInput ? emailInput.value.trim() : '';
+            if (!email) {
+              alert('Ange en e-postadress först.');
+              return;
+            }
+            setButtonsEnabled(false);
+            client.auth.signInWithOtp({ email: email }).then(function (res) {
+              setButtonsEnabled(true);
+              if (res.error) {
+                alert('Kunde inte skicka länk: ' + res.error.message);
+                return;
+              }
+              alert('Kolla din e-post för en magisk länk.');
+            });
+          }
+
+          function handleGoogle() {
+            setButtonsEnabled(false);
+            client.auth.signInWithOAuth({
+              provider: 'google',
+              options: { redirectTo: window.location.origin + '/ai/' }
+            }).then(function (res) {
+              setButtonsEnabled(true);
+              if (res.error) alert('Kunde inte logga in: ' + res.error.message);
+            });
+          }
+
+          if (googleBtn) googleBtn.addEventListener('click', function (e) { e.preventDefault(); handleGoogle(); });
+          if (magicBtn) magicBtn.addEventListener('click', function (e) { e.preventDefault(); handleMagicLink(); });
+        })
+        .catch(function (err) {
+          console.error('Supabase-klient saknas.', err);
+        });
     })();
   </script>
 {% endblock %}
