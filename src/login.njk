@@ -85,6 +85,11 @@ disableFooter: true
       color: var(--muted);
       font-size: 0.95rem;
     }
+    .login-hint {
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
   </style>
 {% endblock %}
 
@@ -99,6 +104,7 @@ disableFooter: true
     <div class="login-input">
       <label for="login-email">E-post</label>
       <input id="login-email" type="email" name="email" placeholder="din@epost.se" data-email-input />
+      <p class="login-hint">Fyll i e-post och v&auml;lj Google eller E-postl&auml;nk f&ouml;r att forts&auml;tta.</p>
     </div>
 
     <div class="login-actions">
@@ -123,7 +129,23 @@ disableFooter: true
   <script>
     (function () {
       var client = window.mpSupabase;
-      if (!client) return;
+      var googleBtn = document.querySelector('[data-login-action="google"]');
+      var magicBtn = document.querySelector('[data-login-action="magic"]');
+      var emailInput = document.querySelector('[data-email-input]');
+
+      function setButtonsEnabled(enabled) {
+        [googleBtn, magicBtn].forEach(function (btn) {
+          if (!btn) return;
+          btn.style.pointerEvents = enabled ? '' : 'none';
+          btn.style.opacity = enabled ? '1' : '0.6';
+        });
+      }
+
+      if (!client) {
+        setButtonsEnabled(false);
+        console.error('Supabase-klient saknas.');
+        return;
+      }
 
       function redirectIfLogged() {
         client.auth.getSession().then(function (res) {
@@ -135,20 +157,21 @@ disableFooter: true
 
       redirectIfLogged();
 
-      client.auth.onAuthStateChange(function (event) {
-        if (event === 'SIGNED_IN') {
+      client.auth.onAuthStateChange(function (event, session) {
+        if (event === 'SIGNED_IN' && session) {
           window.location.href = '/ai/';
         }
       });
 
       function handleMagicLink() {
-        var emailInput = document.querySelector('[data-email-input]');
         var email = emailInput ? emailInput.value.trim() : '';
         if (!email) {
           alert('Ange en e-postadress f&ouml;rst.');
           return;
         }
+        setButtonsEnabled(false);
         client.auth.signInWithOtp({ email: email }).then(function (res) {
+          setButtonsEnabled(true);
           if (res.error) {
             alert('Kunde inte skicka l&auml;nk: ' + res.error.message);
             return;
@@ -158,16 +181,16 @@ disableFooter: true
       }
 
       function handleGoogle() {
+        setButtonsEnabled(false);
         client.auth.signInWithOAuth({
           provider: 'google',
           options: { redirectTo: window.location.origin + '/ai/' }
         }).then(function (res) {
+          setButtonsEnabled(true);
           if (res.error) alert('Kunde inte logga in: ' + res.error.message);
         });
       }
 
-      var googleBtn = document.querySelector('[data-login-action="google"]');
-      var magicBtn = document.querySelector('[data-login-action="magic"]');
       if (googleBtn) googleBtn.addEventListener('click', function (e) { e.preventDefault(); handleGoogle(); });
       if (magicBtn) magicBtn.addEventListener('click', function (e) { e.preventDefault(); handleMagicLink(); });
     })();
