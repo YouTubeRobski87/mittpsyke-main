@@ -166,12 +166,12 @@ disableFooter: true
             }
           });
 
-          function handleMagicLink() {
-            var email = emailInput ? emailInput.value.trim() : '';
-            if (!email) {
-              alert('Ange en e-postadress först.');
-              return;
-            }
+      function handleMagicLink() {
+        var email = emailInput ? emailInput.value.trim() : '';
+        if (!email) {
+          alert('Ange en e-postadress först.');
+          return;
+        }
             setButtonsEnabled(false);
             client.auth.signInWithOtp({ email: email }).then(function (res) {
               setButtonsEnabled(true);
@@ -180,19 +180,34 @@ disableFooter: true
                 return;
               }
               alert('Kolla din e-post för en magisk länk.');
-            });
-          }
+        });
+      }
 
-          function handleGoogle() {
-            setButtonsEnabled(false);
-            client.auth.signInWithOAuth({
-              provider: 'google',
-              options: { redirectTo: window.location.origin + '/ai/' }
-            }).then(function (res) {
-              setButtonsEnabled(true);
-              if (res.error) alert('Kunde inte logga in: ' + res.error.message);
-            });
-          }
+      function handleGoogle() {
+        setButtonsEnabled(false);
+        client.auth.signInWithOAuth({
+          provider: 'google',
+          options: { redirectTo: window.location.origin + '/ai/' }
+        })
+          .then(function (res) {
+            if (res.error) {
+              alert('Kunde inte logga in: ' + res.error.message);
+              return;
+            }
+            if (res.data && res.data.url) {
+              window.location.href = res.data.url;
+            } else {
+              alert('Kunde inte starta Google-inloggning (saknar redirect-URL).');
+            }
+          })
+          .catch(function (err) {
+            console.error('Google OAuth-fel', err);
+            alert('Kunde inte logga in: ' + err.message);
+          })
+          .finally(function () {
+            setButtonsEnabled(true);
+          });
+      }
 
           if (googleBtn) googleBtn.addEventListener('click', function (e) { e.preventDefault(); handleGoogle(); });
           if (magicBtn) magicBtn.addEventListener('click', function (e) { e.preventDefault(); handleMagicLink(); });
