@@ -14,7 +14,9 @@
   {% endblock %}
 
   {% block footer %}
-    {% include "partials/footer.njk" %}
+    {% if not disableFooter %}
+      {% include "partials/footer.njk" %}
+    {% endif %}
   {% endblock %}
   {% block scripts %}{% endblock %}
 </body>
