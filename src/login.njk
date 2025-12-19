@@ -1,4 +1,4 @@
-ï»¿---
+---
 layout: layouts/base.njk
 title: Logga in
 permalink: /login/
@@ -76,40 +76,75 @@ disableFooter: true
   <div class="login-shell">
     <h1 class="login-title">Spara dina samtal (valfritt)</h1>
     <p class="login-lede">
-      Om du vill kan du logga in fÃ¶r att fortsÃ¤tta AI-stÃ¶det Ã¶ver tid.
-      Du kan ocksÃ¥ anvÃ¤nda AI-stÃ¶det utan konto.
+      Om du vill kan du logga in för att fortsätta AI-stödet över tid.
+      Du kan också använda AI-stödet utan konto.
     </p>
 
     <div class="login-actions">
       <a class="login-btn" href="#" data-login-action="google">
-        <span>FortsÃ¤tt med Google</span>
+        <span>Fortsätt med Google</span>
       </a>
       <a class="login-btn secondary" href="#" data-login-action="magic">
-        <span>FÃ¥ lÃ¤nk via e-post (magic link)</span>
+        <span>Få länk via e-post (magic link)</span>
       </a>
     </div>
 
     <p class="login-note">
-      Inloggning gÃ¶r att AI-stÃ¶det kan minnas vad ni pratat om.
-      Du bestÃ¤mmer alltid sjÃ¤lv vad som sparas.
+      Inloggning gör att AI-stödet kan minnas vad ni pratat om.
+      Du bestämmer alltid själv vad som sparas.
     </p>
 
-    <p class="login-footnote">Kom ihÃ¥g: AI-stÃ¶det fungerar Ã¤ven utan inloggning.</p>
+    <p class="login-footnote">Kom ihåg: AI-stödet fungerar även utan inloggning.</p>
   </div>
 </main>
 
 {% block scripts %}
   <script>
     (function () {
-      function handleLoginClick(e) {
-        e.preventDefault();
-        localStorage.setItem('mp-logged-in', 'true');
-        window.location.href = '/ai/';
+      var client = window.mpSupabase;
+      if (!client) return;
+
+      function redirectIfLogged() {
+        client.auth.getSession().then(function (res) {
+          if (res && res.data && res.data.session) {
+            window.location.href = '/ai/';
+          }
+        });
       }
 
-      document.querySelectorAll('[data-login-action]').forEach(function (btn) {
-        btn.addEventListener('click', handleLoginClick);
+      redirectIfLogged();
+
+      client.auth.onAuthStateChange(function (event) {
+        if (event === 'SIGNED_IN') {
+          window.location.href = '/ai/';
+        }
       });
+
+      function handleMagicLink() {
+        var email = window.prompt('Ange din e-post för att få en inloggningslänk:');
+        if (!email) return;
+        client.auth.signInWithOtp({ email: email }).then(function (res) {
+          if (res.error) {
+            alert('Kunde inte skicka länk: ' + res.error.message);
+            return;
+          }
+          alert('Kolla din e-post för en magisk länk.');
+        });
+      }
+
+      function handleGoogle() {
+        client.auth.signInWithOAuth({
+          provider: 'google',
+          options: { redirectTo: window.location.origin + '/ai/' }
+        }).then(function (res) {
+          if (res.error) alert('Kunde inte logga in: ' + res.error.message);
+        });
+      }
+
+      var googleBtn = document.querySelector('[data-login-action="google"]');
+      var magicBtn = document.querySelector('[data-login-action="magic"]');
+      if (googleBtn) googleBtn.addEventListener('click', function (e) { e.preventDefault(); handleGoogle(); });
+      if (magicBtn) magicBtn.addEventListener('click', function (e) { e.preventDefault(); handleMagicLink(); });
     })();
   </script>
 {% endblock %}
