@@ -1,6 +1,6 @@
----
+ï»¿---
 layout: layouts/base.njk
-title: Ditt stöd – på dina villkor
+title: Ditt stÃ¶d â€“ pÃ¥ dina villkor
 ---
 
 <section class="hero">
@@ -22,7 +22,7 @@ title: Ditt stöd – på dina villkor
             box-shadow: var(--shadow);
           "
         >
-          Starta AI-stöd
+          Starta AI-st&ouml;d
         </a>
       </div>
     </div>
@@ -30,7 +30,7 @@ title: Ditt stöd – på dina villkor
 </section>
 
 <section class="container" style="padding-bottom: var(--space-3xl);">
-  <h2 style="text-align: center; margin-bottom: var(--space-xl);">Vad kämpar du med?</h2>
+  <h2 style="text-align: center; margin-bottom: var(--space-xl);">Vad kÃ¤mpar du med?</h2>
 
   <div class="portal-grid">
     {% for portal in collections.portaler %}
@@ -39,7 +39,7 @@ title: Ditt stöd – på dina villkor
       <h3>{{ portal.data.title }}</h3>
       <p class="portal-card-description">{{ portal.data.description | truncateWords(15) }}</p>
       <span class="portal-card-link">
-        <span>Läs mer</span>
+        <span>LÃ¤s mer</span>
         {% icon "symbol-arrow-right", "portal-card-link-icon" %}
       </span>
     </a>
@@ -66,7 +66,7 @@ title: Ditt stöd – på dina villkor
 </section>
 
 <section class="container" style="padding: var(--space-3xl) 0;">
-  <h2 style="text-align: center; margin-bottom: var(--space-xl);">Alla stödlinjer</h2>
+  <h2 style="text-align: center; margin-bottom: var(--space-xl);">Alla stÃ¶dlinjer</h2>
 
   <div class="support-grid">
     {% for line in supportlines | selectattr("urgent") %}
@@ -75,6 +75,9 @@ title: Ditt stöd – på dina villkor
   </div>
 
   <p style="text-align: center; margin-top: var(--space-xl);">
-    <a href="/stodlinjer/" style="font-weight: 600;">Se alla {{ supportlines | length }} stödlinjer &rarr;</a>
+    <a href="/stodlinjer/" style="font-weight: 600;">Se alla {{ supportlines | length }} stÃ¶dlinjer &rarr;</a>
   </p>
 </section>
+
+
+
