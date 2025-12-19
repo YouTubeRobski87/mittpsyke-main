@@ -129,14 +129,10 @@ disableFooter: true
   <script type="module">
     import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
 
-    const supabaseUrl = 'https://upzfnjdqapkdgvhqxpsn.supabase.co';
-    const supabaseKey =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVwemZuamRxYXBrZGd2aHF4cHNuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjU0NjUyNjAsImV4cCI6MjA4MTA0MTI2MH0.J-t_xkwRWvMoj0Lo5pKtglsJ3vl4L9FP3cBTo-mJtaQ';
+    const env = window.MP_ENV || {};
+    const supabaseUrl = env.supabaseUrl || '';
+    const supabaseKey = env.supabaseAnonKey || env.supabasePublishableKey || '';
     const redirectUrl = 'https://www.mittpsyke.se/ai/';
-
-    const supabase = createClient(supabaseUrl, supabaseKey);
-    window.mpSupabase = supabase;
-    window.mpSupabaseReady = Promise.resolve(supabase);
 
     const googleBtn = document.getElementById('login-google');
     const magicBtn = document.querySelector('[data-login-action="magic"]');
@@ -151,6 +147,19 @@ disableFooter: true
         btn.style.opacity = enabled ? '1' : '0.6';
       });
     }
+
+    setButtonsEnabled(false);
+
+    if (!supabaseUrl || !supabaseKey) {
+      console.error('Supabase env missing.');
+      return;
+    }
+
+    const supabase = createClient(supabaseUrl, supabaseKey);
+    window.mpSupabase = supabase;
+    window.mpSupabaseReady = Promise.resolve(supabase);
+
+    setButtonsEnabled(true);
 
     async function redirectIfLogged() {
       const { data, error } = await supabase.auth.getSession();

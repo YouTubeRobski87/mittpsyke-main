@@ -23,6 +23,13 @@
     document.documentElement.classList.toggle('dark', theme === 'dark');
   })();
 </script>
+<script>
+  window.MP_ENV = {
+    supabaseUrl: '{{ env.supabaseUrl | default("") }}',
+    supabaseAnonKey: '{{ env.supabaseAnonKey | default("") }}',
+    supabasePublishableKey: '{{ env.supabasePublishableKey | default("") }}'
+  };
+</script>
 <script>window.BASE_URL = '{{ baseUrl }}';</script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <link rel="stylesheet" href="{{ baseUrl }}/assets/css/main.css" />

@@ -1,7 +1,13 @@
 // Supabase client + nav auth UI
 (function () {
-  var SUPABASE_URL = 'https://upzfnjdqapkdgvhqxpsn.supabase.co';
-  var SUPABASE_ANON_KEY = 'sb_publishable_qIQ6hHDTH_i7mvJObG7Vog_Y4bLN22J';
+  var env = window.MP_ENV || {};
+  var SUPABASE_URL = env.supabaseUrl || '';
+  var SUPABASE_ANON_KEY = env.supabaseAnonKey || env.supabasePublishableKey || '';
+
+  if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
+    console.error('Supabase env missing.');
+    return;
+  }
 
   function loadSupabase() {
     return new Promise(function (resolve, reject) {
