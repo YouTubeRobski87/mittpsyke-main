@@ -81,10 +81,10 @@ disableFooter: true
     </p>
 
     <div class="login-actions">
-      <a class="login-btn" href="#">
+      <a class="login-btn" href="#" data-login-action="google">
         <span>Fortsätt med Google</span>
       </a>
-      <a class="login-btn secondary" href="#">
+      <a class="login-btn secondary" href="#" data-login-action="magic">
         <span>Få länk via e-post (magic link)</span>
       </a>
     </div>
@@ -97,3 +97,19 @@ disableFooter: true
     <p class="login-footnote">Kom ihåg: AI-stödet fungerar även utan inloggning.</p>
   </div>
 </main>
+
+{% block scripts %}
+  <script>
+    (function () {
+      function handleLoginClick(e) {
+        e.preventDefault();
+        localStorage.setItem('mp-logged-in', 'true');
+        window.location.href = '/ai/';
+      }
+
+      document.querySelectorAll('[data-login-action]').forEach(function (btn) {
+        btn.addEventListener('click', handleLoginClick);
+      });
+    })();
+  </script>
+{% endblock %}

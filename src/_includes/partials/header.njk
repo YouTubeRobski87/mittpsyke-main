@@ -45,21 +45,60 @@
         AI-stöd
       </a>
     </li>
-    <li>
+    <li class="nav-auth">
       <a href="/login/"
-         class="nav-link"
+         class="nav-link auth-login"
          style="opacity: 0.8; font-weight: 500;">
         Logga in
       </a>
+      <a href="#"
+         class="nav-link auth-logout"
+         style="display: none; opacity: 0.8; font-weight: 500;">
+        Logga ut
+      </a>
+      <span class="auth-status" style="display: none; font-size: 0.9rem; color: var(--muted);">Du är inloggad</span>
     </li>
   </ul>
 </nav>
 
 
     <!-- Mobilmeny-knapp (om du redan har stöd i CSS/JS) -->
-    <button class="nav-toggle" aria-label="öppna meny">
-      ?
-    </button>
+  <button class="nav-toggle" aria-label="öppna meny">
+    ?
+  </button>
 
   </div>
 </header>
+
+<script>
+  (function () {
+    var isLoggedIn = localStorage.getItem('mp-logged-in') === 'true';
+    var loginLink = document.querySelector('.auth-login');
+    var logoutLink = document.querySelector('.auth-logout');
+    var statusEl = document.querySelector('.auth-status');
+
+    function renderAuth() {
+      if (isLoggedIn) {
+        if (loginLink) loginLink.style.display = 'none';
+        if (logoutLink) logoutLink.style.display = '';
+        if (statusEl) statusEl.style.display = '';
+      } else {
+        if (loginLink) loginLink.style.display = '';
+        if (logoutLink) logoutLink.style.display = 'none';
+        if (statusEl) statusEl.style.display = 'none';
+      }
+    }
+
+    renderAuth();
+
+    if (logoutLink) {
+      logoutLink.addEventListener('click', function (e) {
+        e.preventDefault();
+        localStorage.removeItem('mp-logged-in');
+        isLoggedIn = false;
+        renderAuth();
+        window.location.href = '/';
+      });
+    }
+  })();
+</script>
