@@ -25,9 +25,14 @@
   }
 
   async function refresh() {
-    var sessionRes = await client.auth.getSession();
-    var loggedIn = Boolean(sessionRes?.data?.session);
-    renderAuth(loggedIn);
+    try {
+      var sessionRes = await client.auth.getSession();
+      var loggedIn = Boolean(sessionRes && sessionRes.data && sessionRes.data.session);
+      renderAuth(loggedIn);
+    } catch (err) {
+      console.error('auth:session_error', err);
+      renderAuth(false);
+    }
   }
 
   refresh();
@@ -35,14 +40,20 @@
   if (logoutLink) {
     logoutLink.addEventListener('click', function (e) {
       e.preventDefault();
-      client.auth.signOut().finally(function () {
-        renderAuth(false);
-        window.location.href = '/';
-      });
+      client.auth
+        .signOut()
+        .catch(function (err) {
+          console.error('auth:signout_error', err);
+        })
+        .finally(function () {
+          renderAuth(false);
+          window.location.href = '/';
+        });
     });
   }
 
-  client.auth.onAuthStateChange(function () {
-    refresh();
+  client.auth.onAuthStateChange(function (_event, session) {
+    var loggedIn = Boolean(session);
+    renderAuth(loggedIn);
   });
 })();
