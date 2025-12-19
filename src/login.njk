@@ -108,7 +108,7 @@ disableFooter: true
     </div>
 
     <div class="login-actions">
-      <a class="login-btn" href="#" data-login-action="google">
+      <a class="login-btn" id="login-google" href="#" data-login-action="google">
         <span>Forts&auml;tt med Google</span>
       </a>
       <a class="login-btn secondary" href="#" data-login-action="magic">
@@ -126,112 +126,89 @@ disableFooter: true
 </main>
 
 {% block scripts %}
-  <script>
-    (function () {
-      var googleBtn = document.querySelector('[data-login-action="google"]');
-      var magicBtn = document.querySelector('[data-login-action="magic"]');
-      var emailInput = document.querySelector('[data-email-input]');
-      var busy = false;
+  <script type="module">
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
 
-      function setButtonsEnabled(enabled) {
-        busy = !enabled;
-        [googleBtn, magicBtn].forEach(function (btn) {
-          if (!btn) return;
-          btn.style.pointerEvents = enabled ? '' : 'none';
-          btn.style.opacity = enabled ? '1' : '0.6';
-        });
+    const supabaseUrl = 'https://upzfnjdqapkdgvhqxpsn.supabase.co';
+    const supabaseKey =
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVwemZuamRxYXBrZGd2aHF4cHNuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjU0NjUyNjAsImV4cCI6MjA4MTA0MTI2MH0.J-t_xkwRWvMoj0Lo5pKtglsJ3vl4L9FP3cBTo-mJtaQ';
+    const redirectUrl = 'https://www.mittpsyke.se/ai/';
+
+    const supabase = createClient(supabaseUrl, supabaseKey);
+    window.mpSupabase = supabase;
+    window.mpSupabaseReady = Promise.resolve(supabase);
+
+    const googleBtn = document.getElementById('login-google');
+    const magicBtn = document.querySelector('[data-login-action="magic"]');
+    const emailInput = document.querySelector('[data-email-input]');
+    let busy = false;
+
+    function setButtonsEnabled(enabled) {
+      busy = !enabled;
+      [googleBtn, magicBtn].forEach((btn) => {
+        if (!btn) return;
+        btn.style.pointerEvents = enabled ? '' : 'none';
+        btn.style.opacity = enabled ? '1' : '0.6';
+      });
+    }
+
+    async function redirectIfLogged() {
+      const { data, error } = await supabase.auth.getSession();
+      if (error) {
+        console.error('auth:session_error', error);
+        return;
       }
+      if (data && data.session) {
+        window.location.href = redirectUrl;
+      }
+    }
 
+    redirectIfLogged();
+
+    supabase.auth.onAuthStateChange((event, session) => {
+      if (event === 'SIGNED_IN' && session) {
+        window.location.href = redirectUrl;
+      }
+    });
+
+    async function handleMagicLink() {
+      if (busy) return;
+      const email = emailInput ? emailInput.value.trim() : '';
+      if (!email) {
+        alert('Ange en e-postadress f\u00f6rst.');
+        return;
+      }
       setButtonsEnabled(false);
+      const { error } = await supabase.auth.signInWithOtp({
+        email,
+        options: { emailRedirectTo: redirectUrl }
+      });
+      if (error) {
+        alert('Kunde inte skicka l\u00e4nk: ' + error.message);
+      } else {
+        alert('Kolla din e-post f\u00f6r en magisk l\u00e4nk.');
+      }
+      setButtonsEnabled(true);
+    }
 
-      var ready = window.mpSupabaseReady || Promise.resolve(window.mpSupabase);
-      ready
-        .then(function (client) {
-          if (!client) {
-            console.error('Supabase-klient saknas.');
-            setButtonsEnabled(true);
-            return;
-          }
+    async function handleGoogle() {
+      if (busy) return;
+      setButtonsEnabled(false);
+      const { error, data } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: { redirectTo: redirectUrl }
+      });
+      if (error) {
+        alert(error.message);
+      } else if (data?.url) {
+        window.location.href = data.url;
+      } else {
+        alert('Kunde inte starta Google-inloggning (saknar redirect-URL).');
+      }
+      setButtonsEnabled(true);
+    }
 
-          setButtonsEnabled(true);
-
-          function redirectIfLogged() {
-            client.auth.getSession().then(function (res) {
-              if (res && res.data && res.data.session) {
-                window.location.href = '/ai/';
-              }
-            });
-          }
-
-          redirectIfLogged();
-
-          client.auth.onAuthStateChange(function (event, session) {
-            if (event === 'SIGNED_IN' && session) {
-              window.location.href = '/ai/';
-            }
-          });
-
-          function handleMagicLink() {
-            if (busy) return;
-            var email = emailInput ? emailInput.value.trim() : '';
-            if (!email) {
-              alert('Ange en e-postadress f&ouml;rst.');
-              return;
-            }
-            setButtonsEnabled(false);
-            client.auth
-              .signInWithOtp({ email: email })
-              .then(function (res) {
-                if (res.error) {
-                  alert('Kunde inte skicka l&auml;nk: ' + res.error.message);
-                  return;
-                }
-                alert('Kolla din e-post f&ouml;r en magisk l&auml;nk.');
-              })
-              .catch(function (err) {
-                console.error('magic link error', err);
-                alert('Kunde inte skicka l&auml;nk: ' + err.message);
-              })
-              .finally(function () {
-                setButtonsEnabled(true);
-              });
-          }
-
-          function handleGoogle() {
-            if (busy) return;
-            setButtonsEnabled(false);
-            client.auth
-              .signInWithOAuth({
-                provider: 'google',
-                options: { redirectTo: window.location.origin + '/ai/' }
-              })
-              .then(function (res) {
-                if (res.error) {
-                  alert('Kunde inte logga in: ' + res.error.message);
-                  return;
-                }
-                if (res.data && res.data.url) {
-                  window.location.href = res.data.url;
-                } else {
-                  alert('Kunde inte starta Google-inloggning (saknar redirect-URL).');
-                }
-              })
-              .catch(function (err) {
-                console.error('Google OAuth-fel', err);
-                alert('Kunde inte logga in: ' + err.message);
-              })
-              .finally(function () {
-                setButtonsEnabled(true);
-              });
-          }
-
-          if (googleBtn) googleBtn.addEventListener('click', function (e) { e.preventDefault(); handleGoogle(); });
-          if (magicBtn) magicBtn.addEventListener('click', function (e) { e.preventDefault(); handleMagicLink(); });
-        })
-        .catch(function (err) {
-          console.error('Supabase-klient saknas.', err);
-          setButtonsEnabled(true);
-        });
-    })();
+    if (googleBtn) googleBtn.addEventListener('click', (e) => { e.preventDefault(); handleGoogle(); });
+    if (magicBtn) magicBtn.addEventListener('click', (e) => { e.preventDefault(); handleMagicLink(); });
   </script>
 {% endblock %}
