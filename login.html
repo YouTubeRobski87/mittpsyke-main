@@ -5,12 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Logga in | MittPsyke</title>
   <link rel="stylesheet" href="style.css">
-
-  <!-- Supabase SDK -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-  <!-- Login-script -->
-  <script src="auth-login.js"></script>
 </head>
 
 <body>
@@ -50,5 +44,17 @@
 <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
 <script src="theme.js"></script>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  if (!window.supabaseClient && window.supabase) {
+    window.supabaseClient = window.supabase.createClient(
+      "https://upzfnjdqapkdgvhqxpsn.supabase.co",
+      "sb_publishable_qIQ6hHDTH_i7mvJObG7Vog_Y4bLN22J"
+    );
+  } else if (!window.supabaseClient) {
+    console.error("Supabase SDK missing.");
+  }
+</script>
+<script src="auth-login.js"></script>
 </body>
 </html>

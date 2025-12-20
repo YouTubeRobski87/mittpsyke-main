@@ -8,10 +8,6 @@
   <link rel="stylesheet" href="/base.css">
   <link rel="stylesheet" href="/components.css">
   <link rel="stylesheet" href="/main.css">
-
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="auth.js"></script>
-
 </head>
 
 <body>
@@ -46,5 +42,17 @@
 
   </section>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  if (!window.supabaseClient && window.supabase) {
+    window.supabaseClient = window.supabase.createClient(
+      "https://upzfnjdqapkdgvhqxpsn.supabase.co",
+      "sb_publishable_qIQ6hHDTH_i7mvJObG7Vog_Y4bLN22J"
+    );
+  } else if (!window.supabaseClient) {
+    console.error("Supabase SDK missing.");
+  }
+</script>
+<script src="auth.js"></script>
 </body>
 </html>
