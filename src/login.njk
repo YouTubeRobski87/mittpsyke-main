@@ -126,9 +126,7 @@ disableFooter: true
 </main>
 
 {% block scripts %}
-  <script type="module">
-    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
-
+  <script>
     const env = window.MP_ENV || {};
     const supabaseUrl = env.supabaseUrl || '';
     const supabaseKey = env.supabaseAnonKey || env.supabasePublishableKey || '';
@@ -155,69 +153,88 @@ disableFooter: true
       return;
     }
 
-    const supabase = createClient(supabaseUrl, supabaseKey);
-    window.mpSupabase = supabase;
-    window.mpSupabaseReady = Promise.resolve(supabase);
-
-    setButtonsEnabled(true);
-
-    async function redirectIfLogged() {
-      const { data, error } = await supabase.auth.getSession();
-      if (error) {
-        console.error('auth:session_error', error);
+    let supabaseReady = window.mpSupabaseReady;
+    if (!supabaseReady) {
+      const existingClient = window.supabaseClient || window.mpSupabase;
+      if (existingClient) {
+        supabaseReady = Promise.resolve(existingClient);
+      } else if (window.supabase) {
+        const client = window.supabase.createClient(supabaseUrl, supabaseKey);
+        window.supabaseClient = client;
+        window.mpSupabase = client;
+        supabaseReady = Promise.resolve(client);
+      } else {
+        console.error('Supabase SDK missing.');
         return;
       }
-      if (data && data.session) {
-        window.location.href = redirectUrl;
-      }
+      window.mpSupabaseReady = supabaseReady;
     }
 
-    redirectIfLogged();
+    supabaseReady
+      .then((supabase) => {
+        setButtonsEnabled(true);
 
-    supabase.auth.onAuthStateChange((event, session) => {
-      if (event === 'SIGNED_IN' && session) {
-        window.location.href = redirectUrl;
-      }
-    });
+        async function redirectIfLogged() {
+          const { data, error } = await supabase.auth.getSession();
+          if (error) {
+            console.error('auth:session_error', error);
+            return;
+          }
+          if (data && data.session) {
+            window.location.href = redirectUrl;
+          }
+        }
 
-    async function handleMagicLink() {
-      if (busy) return;
-      const email = emailInput ? emailInput.value.trim() : '';
-      if (!email) {
-        alert('Ange en e-postadress f\u00f6rst.');
-        return;
-      }
-      setButtonsEnabled(false);
-      const { error } = await supabase.auth.signInWithOtp({
-        email,
-        options: { emailRedirectTo: redirectUrl }
+        redirectIfLogged();
+
+        supabase.auth.onAuthStateChange((event, session) => {
+          if (event === 'SIGNED_IN' && session) {
+            window.location.href = redirectUrl;
+          }
+        });
+
+        async function handleMagicLink() {
+          if (busy) return;
+          const email = emailInput ? emailInput.value.trim() : '';
+          if (!email) {
+            alert('Ange en e-postadress f\u00f6rst.');
+            return;
+          }
+          setButtonsEnabled(false);
+          const { error } = await supabase.auth.signInWithOtp({
+            email,
+            options: { emailRedirectTo: redirectUrl }
+          });
+          if (error) {
+            alert('Kunde inte skicka l\u00e4nk: ' + error.message);
+          } else {
+            alert('Kolla din e-post f\u00f6r en magisk l\u00e4nk.');
+          }
+          setButtonsEnabled(true);
+        }
+
+        async function handleGoogle() {
+          if (busy) return;
+          setButtonsEnabled(false);
+          const { error, data } = await supabase.auth.signInWithOAuth({
+            provider: 'google',
+            options: { redirectTo: redirectUrl }
+          });
+          if (error) {
+            alert(error.message);
+          } else if (data?.url) {
+            window.location.href = data.url;
+          } else {
+            alert('Kunde inte starta Google-inloggning (saknar redirect-URL).');
+          }
+          setButtonsEnabled(true);
+        }
+
+        if (googleBtn) googleBtn.addEventListener('click', (e) => { e.preventDefault(); handleGoogle(); });
+        if (magicBtn) magicBtn.addEventListener('click', (e) => { e.preventDefault(); handleMagicLink(); });
+      })
+      .catch((err) => {
+        console.error('auth:init_error', err);
       });
-      if (error) {
-        alert('Kunde inte skicka l\u00e4nk: ' + error.message);
-      } else {
-        alert('Kolla din e-post f\u00f6r en magisk l\u00e4nk.');
-      }
-      setButtonsEnabled(true);
-    }
-
-    async function handleGoogle() {
-      if (busy) return;
-      setButtonsEnabled(false);
-      const { error, data } = await supabase.auth.signInWithOAuth({
-        provider: 'google',
-        options: { redirectTo: redirectUrl }
-      });
-      if (error) {
-        alert(error.message);
-      } else if (data?.url) {
-        window.location.href = data.url;
-      } else {
-        alert('Kunde inte starta Google-inloggning (saknar redirect-URL).');
-      }
-      setButtonsEnabled(true);
-    }
-
-    if (googleBtn) googleBtn.addEventListener('click', (e) => { e.preventDefault(); handleGoogle(); });
-    if (magicBtn) magicBtn.addEventListener('click', (e) => { e.preventDefault(); handleMagicLink(); });
   </script>
 {% endblock %}
