@@ -1,4 +1,4 @@
-﻿---
+---
 layout: layouts/base.njk
 title: Logga in
 permalink: /login/
@@ -127,6 +127,7 @@ disableFooter: true
 
 {% block scripts %}
   <script>
+    (function () {
     const env = window.MP_ENV || {};
     const supabaseUrl = env.supabaseUrl || '';
     const supabaseKey = env.supabaseAnonKey || env.supabasePublishableKey || '';
@@ -236,5 +237,7 @@ disableFooter: true
       .catch((err) => {
         console.error('auth:init_error', err);
       });
+    })();
   </script>
 {% endblock %}
+
