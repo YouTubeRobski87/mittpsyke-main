@@ -47,15 +47,16 @@ const introByCategory = {
   E: "Hej! Du best\u00e4mmer helt sj\u00e4lv vad du vill dela. Jag lyssnar, och du har kontroll h\u00e4r."
 };
 
-const introByContext = {
-  angest: "Du har valt \u00c5ngest \u2013 jag finns h\u00e4r. Vill du ber\u00e4tta lite om hur det k\u00e4nns?",
-  depression: "Du har valt Depression \u2013 vi tar det lugnt. Vill du ber\u00e4tta vad som k\u00e4nts tyngst?",
-  trauma: "Du har valt Trauma \u2013 du har kontroll h\u00e4r. Vill du dela n\u00e5got litet om hur du har det?",
-  sjalvmordstankar: "Du har valt Sj\u00e4lvmordstankar \u2013 jag lyssnar utan att d\u00f6ma. Vill du ber\u00e4tta hur det k\u00e4nns just nu?",
-  sjalvskadebeteende: "Du har valt Sj\u00e4lvskadebeteende \u2013 vi tar det varsamt. Vill du s\u00e4ga n\u00e5got om vad som triggar mest?"
+// Startmeddelande per kategori
+const introByCategory = {
+  A: "Hej 💛 Jag är här med dig. Vi kan ta det lugnt. Vad känns mest oroligt just nu?",
+  B: "Hej 💛 Vi tar det i din takt. Om du vill, kan du berätta lite om vad som har känts tyngst på sistone.",
+  E: "Hej 💛 Du har full kontroll här. Vi tar det steg för steg och bara så mycket som känns okej för dig."
 };
 
-const intro = introByContext[context] || introByCategory[category] || introByCategory.A;
+
+const intro = introByCategory[category] || introByCategory.A;
+
 
 if (contextNote) {
   const label = friendlyLabelByContext[context];
