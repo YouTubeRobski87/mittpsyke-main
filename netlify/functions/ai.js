@@ -9,10 +9,13 @@ const AI_NAME = "MittPsyke";
 
 // Startmeddelande per kategori
 const introByCategory = {
-  A: "Hej 💛 Jag är här med dig. Vill du berätta vad som känns oroligt just nu?",
-  B: "Hej 💛 Vi kan ta det lugnt här. Vad har känts tyngst på sistone?",
-  E: "Hej 💛 Du bestämmer helt själv vad du vill dela. Jag lyssnar, och du har kontroll här."
+  A: "Hej 💛 Vi kan ta det i lugn takt här. Jag är med dig. Vill du berätta lite om vad som känns oroligt just nu?",
+  
+  B: "Hej 💛 Här finns ingen stress. Vi kan ta det som det kommer. Vill du dela något om hur det har känts på sistone?",
+  
+  E: "Hej 💛 Du har full kontroll här. Vi tar det i din takt, och du behöver bara dela det som känns okej för dig just nu."
 };
+
 
 addMessage("bot", introByCategory[category] || introByCategory.A);
 
