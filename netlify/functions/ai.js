@@ -46,6 +46,9 @@ form.addEventListener("submit", async (e) => {
   }
 });
 
+ addMessage("bot", introByCategory[category] || introByCategory.A);
+
+
 function addMessage(role, text) {
   const wrapper = document.createElement("div");
   wrapper.className = `message ${role}`;
